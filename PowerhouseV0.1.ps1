@@ -249,7 +249,11 @@ function Show-DeviceMenu
 #Install Dependancies Menu
 function Show-InstallDependanciesMenu
 {
-     param (
+     
+	 do
+{
+	
+	 param (
            [string]$Title = 'Install Dependancies'
      )
      cls
@@ -258,8 +262,63 @@ function Show-InstallDependanciesMenu
      Write-Host "1: Press '1' to run Get-Printer."
      Write-Host "2: Press '2' to run Get-Disk"
      Write-Host "3: Press '3' to run Get-Volume"
-     Write-Host "Q: Press 'Q' to quit."
+	 
+     Write-Host "[ M ] Main Menu"
 	 Write-Host ""
+	 
+     $input = Read-Host "Please make a selection"
+     switch ($input)
+     {
+           '1' {
+                cls
+                Get-Printer
+           } '2' {
+                cls
+                GetDisk
+           } '3' {
+                cls
+                GetVolume
+           }'4' {
+                cls
+                Show-ActiveDirectoryMenu
+           } '5' {
+                cls
+                Show-UpdatingMenu
+           } '6' {
+                cls
+                Show-MonitoringMenu
+           }'7' {
+                cls
+                Show-MaintanenceMenu
+           } '8' {
+                cls
+                Show-ShortcutsMenu
+           } '9' {
+                cls
+                Show-BasicPCActionsMenu
+           }'10' {
+                cls
+                Show-DeviceMenu
+           } 'A' {
+                cls
+                Show-ListAllToolsMenu
+           } 'I' {
+                cls
+                Show-InstallDependanciesMenu
+           } 'H' {
+                cls
+                Show-HelpMenu
+           }'M' {
+                cls
+                Show-Menu
+           } 'q' {
+                return
+           }
+     }
+     pause
+}
+until ($input -eq 'q')
+	 
 }
 
 #Help Menu
@@ -268,6 +327,7 @@ function Show-HelpMenu
      param (
            [string]$Title = 'Help Menu'
      )
+	 
      cls
 	 MenuTitle
     
