@@ -46,7 +46,7 @@ gwmi Win32_SystemDriver | select name,@{n="version";e={(gi $_.pathname).VersionI
 #List bios information
 Get-WmiObject -Class Win32_Bios | Format-List -Property *
 
-
+#Add script for updating Powershell
 
 
 #Display active services 

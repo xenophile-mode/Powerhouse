@@ -7,26 +7,8 @@ function Show-Menu
            [string]$Title = 'Powershell Tools'
      )
      cls
-	 Write-Host "______                      _ "
-	 Write-Host "| ___ \                    | |"      
-     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
-     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
-     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
-     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
-     Write-Host ""
-	 Write-Host ""
-     Write-Host ""
-	 
-	 Write-Host " =========================================="
-     Write-Host "|             $Title             |"
-	 Write-Host " =========================================="
-     Write-Host ""
+	 MenuTitle
     
-	
-	 
 	 Write-Host "[ A ] List all tools"
      Write-Host "[ 1 ] Networking tools"
      Write-Host "[ 2 ] Printer tools"
@@ -44,6 +26,26 @@ function Show-Menu
 	 Write-Host "[ H ] Help"
      Write-Host "[ Q ]Quit."
 	 Write-Host ""
+}
+
+#Menu Title Functions
+Function MenuTitle {
+     Write-Host ""	 
+	 Write-Host "______                      _ "
+	 Write-Host "| ___ \                    | |"      
+     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
+     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
+     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
+     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
+     Write-Host ""
+	 Write-Host " -Author: Erick Gonzales"
+     Write-Host " -Tools: 4"	 
+     Write-Host ""
+	 Write-Host ""
+     Write-Host ""
+	 
+     Write-Host "====================== $Title ======================"
+     Write-Host ""
 }
 
 #Menu Functions
@@ -75,21 +77,7 @@ function Show-ListAllToolsMenu
            [string]$Title = 'X number of tools'
      )
      cls
-	 Write-Host "______                      _ "
-	 Write-Host "| ___ \                    | |"      
-     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
-     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
-     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
-     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
-     Write-Host ""
-	 Write-Host ""
-     Write-Host ""
-	 
-     Write-Host "====================== $Title ======================"
-     Write-Host ""
+	 MenuTitle `
     
      Write-Host "1: Press '1' to run Get-Printer."
      Write-Host "2: Press '2' to run Get-Disk"
@@ -105,23 +93,8 @@ function Show-NetworkingMenu
            [string]$Title = 'Networking Tools'
      )
      cls
-	 Write-Host "______                      _ "
-	 Write-Host "| ___ \                    | |"      
-     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
-     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
-     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
-     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
-     Write-Host ""
-	 Write-Host ""
-     Write-Host ""
+	 MenuTitle
 	 
-	 Write-Host "====================== $Title ======================"
-     Write-Host ""
-     
-    
      Write-Host "1: Press '1' to run Get-Printer."
      Write-Host "2: Press '2' to run Get-Disk"
      Write-Host "3: Press '3' to run Get-Volume"
@@ -136,21 +109,7 @@ function Show-PrinterMenu
            [string]$Title = 'Printer Tools'
      )
      cls
-	 Write-Host "______                      _ "
-	 Write-Host "| ___ \                    | |"      
-     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
-     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
-     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
-     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
-     Write-Host ""
-	 Write-Host ""
-     Write-Host ""
-	 
-	 Write-Host "====================== $Title ======================"
-     Write-Host ""
+	 MenuTitle
 	 
      Write-Host "1: Press '1' to run Get-Printer."
      Write-Host "2: Press '2' to run Get-Disk"
@@ -166,21 +125,7 @@ function Show-DiskMenu
            [string]$Title = 'Disk Tools'
      )
      cls
-	 Write-Host "______                      _ "
-	 Write-Host "| ___ \                    | |"      
-     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
-     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
-     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
-     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
-     Write-Host ""
-	 Write-Host ""
-     Write-Host ""
-	 
-	 Write-Host "====================== $Title ======================"
-     Write-Host ""
+	 MenuTitle
 	
      Write-Host "1: Press '1' to run Get-Printer."
      Write-Host "2: Press '2' to run Get-Disk"
@@ -196,21 +141,7 @@ function Show-ActiveDirectoryMenu
            [string]$Title = 'Active Directory Tools'
      )
      cls
-	 Write-Host "______                      _ "
-	 Write-Host "| ___ \                    | |"      
-     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
-     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
-     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
-     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
-     Write-Host ""
-	 Write-Host ""
-     Write-Host ""
-	 
-	 Write-Host "====================== $Title ======================"
-     Write-Host ""
+	 MenuTitle
 	 
      Write-Host "1: Press '1' to run Get-Printer."
      Write-Host "2: Press '2' to run Get-Disk"
@@ -226,21 +157,7 @@ function Show-UpdatingMenu
            [string]$Title = 'Updating Tools'
      )
      cls
-	 Write-Host "______                      _ "
-	 Write-Host "| ___ \                    | |"      
-     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
-     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
-     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
-     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
-     Write-Host ""
-	 Write-Host ""
-     Write-Host ""
-	 
-	 Write-Host "====================== $Title ======================"
-     Write-Host ""
+	 MenuTitle
 	   
      Write-Host "1: Press '1' to run Get-Printer."
      Write-Host "2: Press '2' to run Get-Disk"
@@ -256,22 +173,8 @@ function Show-MonitoringMenu
            [string]$Title = 'Monitoring Tools'
      )
      cls
-	 Write-Host "______                      _ "
-	 Write-Host "| ___ \                    | |"      
-     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
-     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
-     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
-     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
-     Write-Host ""
-	 Write-Host ""
-     Write-Host ""
+	 MenuTitle
 	 
-	 Write-Host "====================== $Title ======================"
-     Write-Host ""
-	
      Write-Host "1: Press '1' to run Get-Printer."
      Write-Host "2: Press '2' to run Get-Disk"
      Write-Host "3: Press '3' to run Get-Volume"
@@ -286,21 +189,7 @@ function Show-MaintanenceMenu
            [string]$Title = 'Maintanence Tools'
      )
      cls
-	 Write-Host "______                      _ "
-	 Write-Host "| ___ \                    | |"      
-     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
-     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
-     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
-     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
-     Write-Host ""
-	 Write-Host ""
-     Write-Host ""
-	 
-	 Write-Host "====================== $Title ======================"
-     Write-Host ""
+	 MenuTitle
     
      Write-Host "1: Press '1' to run Get-Printer."
      Write-Host "2: Press '2' to run Get-Disk"
@@ -316,21 +205,7 @@ function Show-ShortcutsMenu
            [string]$Title = 'Shortcuts'
      )
      cls
-	 Write-Host "______                      _ "
-	 Write-Host "| ___ \                    | |"      
-     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
-     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
-     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
-     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
-     Write-Host ""
-	 Write-Host ""
-     Write-Host ""
-	 
-	 Write-Host "====================== $Title ======================"
-     Write-Host ""
+	 MenuTitle
     
      Write-Host "1: Press '1' to run Get-Printer."
      Write-Host "2: Press '2' to run Get-Disk"
@@ -346,21 +221,7 @@ function Show-BasicPCActionsMenu
            [string]$Title = 'Basic PC Actions'
      )
      cls
-	 Write-Host "______                      _ "
-	 Write-Host "| ___ \                    | |"      
-     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
-     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
-     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
-     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
-     Write-Host ""
-	 Write-Host ""
-     Write-Host ""
-	 
-	 Write-Host "====================== $Title ======================"
-     Write-Host ""
+	 MenuTitle
     
      Write-Host "1: Press '1' to run Get-Printer."
      Write-Host "2: Press '2' to run Get-Disk"
@@ -376,21 +237,7 @@ function Show-DeviceMenu
            [string]$Title = 'Device Tools'
      )
      cls
-	 Write-Host "______                      _ "
-	 Write-Host "| ___ \                    | |"      
-     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
-     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
-     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
-     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
-     Write-Host ""
-	 Write-Host ""
-     Write-Host ""
-	 
-	 Write-Host "====================== $Title ======================"
-     Write-Host ""
+	 MenuTitle
     
      Write-Host "1: Press '1' to run Get-Printer."
      Write-Host "2: Press '2' to run Get-Disk"
@@ -406,21 +253,7 @@ function Show-InstallDependanciesMenu
            [string]$Title = 'Install Dependancies'
      )
      cls
-	 Write-Host "______                      _ "
-	 Write-Host "| ___ \                    | |"      
-     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
-     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
-     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
-     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
-     Write-Host ""
-	 Write-Host ""
-     Write-Host ""
-	 
-	 Write-Host "====================== $Title ======================"
-     Write-Host ""
+	 MenuTitle
     
      Write-Host "1: Press '1' to run Get-Printer."
      Write-Host "2: Press '2' to run Get-Disk"
@@ -436,21 +269,7 @@ function Show-HelpMenu
            [string]$Title = 'Help Menu'
      )
      cls
-	 Write-Host "______                      _ "
-	 Write-Host "| ___ \                    | |"      
-     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
-     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
-     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
-     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
-     Write-Host ""
-	 Write-Host ""
-     Write-Host ""
-	 
-	 Write-Host "====================== $Title ======================"
-     Write-Host ""
+	 MenuTitle
     
      Write-Host "1: Press '1' to run Get-Printer."
      Write-Host "2: Press '2' to run Get-Disk"
