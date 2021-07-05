@@ -1,25 +1,52 @@
-Function New-UserFromCSV {
-    Get-Printer ; Get-Disk | Out-Default
-}
-
-Function New-UserManual {
-    #User manual input code..
-}
+Function GetVolume {Get-Printer ; Get-Disk | Out-Default}
 
 
-Write-Host 'Create AD user:
+function OtherMenu
+{
+     
+	 Write-Host 'Other Menu:
 
-  1. From CSV
-  2. via Manual input
+  1. Get Volume
+  2. Test
+  3. Main Menu
   q. Quit'
 
 
-While (($Selection = Read-Host -Prompt 'Please select an option') -notin 1,2,'q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
 
-Switch ($Selection) {
-    1 { New-UserFromCSV }
-    2 { New-UserManual }
+Switch ($IDSelection) {
+    1 { GetVolume }
+    2 { echo test }
+	3 { cls ; Show-MainMenu }
 }
+	 OtherMenu
+}
+
+
+function Show-MainMenu
+{
+     
+	 Write-Host 'Main Menu:
+
+  1. GetVolume
+  2. Other Menu
+  q. Quit'
+
+
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,'q') 
+{ 
+    Write-Warning "$Selection is not a valid option" 
+}
+
+Switch ($IDSelection) {
+    1 { GetVolume }
+    2 { cls ; OtherMenu }
+}
+	 Show-MainMenu
+}
+
+
+cls ; Show-MainMenu

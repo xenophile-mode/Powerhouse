@@ -251,74 +251,22 @@ function Show-DeviceMenu
 function Show-InstallDependanciesMenu
 {
      
-	 do
-{
-	
-	 param (
-           [string]$Title = 'Install Dependancies'
-     )
-     cls
-	 MenuTitle
-    
-     Write-Host "[ 1 ] Install all dependancies"
-     Write-Host "[ 2 ] Install Update Script dependancies"
-     Write-Host "3: Press '3' to run Get-Volume"
-	 
-     Write-Host "[ M ] Main Menu"
-	 Write-Host ""
-	 
-     $input = Read-Host "Please make a selection"
-     switch ($input)
-     {
-           '1' {
-                cls
-                Get-Printer
-           } '2' {
-             
-                UpdateScript
-           } '3' {
-                cls
-                GetVolume
-           }'4' {
-                cls
-                Show-ActiveDirectoryMenu
-           } '5' {
-                cls
-                Show-UpdatingMenu
-           } '6' {
-                cls
-                Show-MonitoringMenu
-           }'7' {
-                cls
-                Show-MaintanenceMenu
-           } '8' {
-                cls
-                Show-ShortcutsMenu
-           } '9' {
-                cls
-                Show-BasicPCActionsMenu
-           }'10' {
-                cls
-                Show-DeviceMenu
-           } 'A' {
-                cls
-                Show-ListAllToolsMenu
-           } 'I' {
-                cls
-                Show-InstallDependanciesMenu
-           } 'H' {
-                cls
-                Show-HelpMenu
-           }'M' {
-                cls
-                Show-Menu
-           } 'q' {
-                return
-           }
-     }
-     break
+	 Write-Host 'Create AD user:
+
+  1. From CSV
+  2. via Manual input
+  q. Quit'
+
+
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,'q') 
+{ 
+    Write-Warning "$Selection is not a valid option" 
 }
-until ($input -eq 'q')
+
+Switch ($IDSelection) {
+    1 { GetVolume }
+    2 { New-UserManual }
+}
 	 
 }
 
