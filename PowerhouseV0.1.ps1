@@ -67,7 +67,8 @@ Function Help {Show-HelpMenu}
 
 #Script/Command Functions
 Function GetDisk {Get-Disk | Out-Default}
-Function GetVolume {Get-Volume | Out-Default}
+Function GetVolume {Get-Volume ; Get-Disk | Out-Default}
+Function UpdateScript {Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate}
 
 
 #List All Tools Menu
@@ -259,8 +260,8 @@ function Show-InstallDependanciesMenu
      cls
 	 MenuTitle
     
-     Write-Host "1: Press '1' to run Get-Printer."
-     Write-Host "2: Press '2' to run Get-Disk"
+     Write-Host "[ 1 ] Install all dependancies"
+     Write-Host "[ 2 ] Install Update Script dependancies"
      Write-Host "3: Press '3' to run Get-Volume"
 	 
      Write-Host "[ M ] Main Menu"
@@ -273,8 +274,8 @@ function Show-InstallDependanciesMenu
                 cls
                 Get-Printer
            } '2' {
-                cls
-                GetDisk
+             
+                UpdateScript
            } '3' {
                 cls
                 GetVolume
@@ -315,7 +316,7 @@ function Show-InstallDependanciesMenu
                 return
            }
      }
-     pause
+     break
 }
 until ($input -eq 'q')
 	 
@@ -388,7 +389,7 @@ do
                 return
            }
      }
-     pause
+     break
 }
 until ($input -eq 'q')
 

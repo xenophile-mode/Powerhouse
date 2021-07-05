@@ -1,7 +1,7 @@
 *See if we can setup remote powershell*
 
 
-#Install script dependancies
+#Install update script dependancies
  Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ;
 Import-Module PSWindowsUpdate ; 
 
