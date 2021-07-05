@@ -16,9 +16,7 @@ Function MenuTitle {
      Write-Host " -Tools: 4"	 
      Write-Host ""
 	 Write-Host ""
-	 Get-Date
-	 Write-Host ""
-	 $env:computername 
+	 Write-Host "Hostname:$($env:computername)                 $(Get-Date)" 
      Write-Host ""
 	 
      Write-Host "====================== $Title ======================"
