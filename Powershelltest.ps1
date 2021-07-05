@@ -49,7 +49,7 @@ function ListToolsMenu
 
 	 Write-Host "[ i ] Install dependancies"
 	 Write-Host "[ h ] Help"
-     Write-Host "[ q ]Quit."
+     Write-Host "[ q ] Quit"
 	 Write-Host ""
 
 While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
@@ -93,7 +93,7 @@ function NetworkingMenu
 
 	 Write-Host "[ i ] Install dependancies"
 	 Write-Host "[ h ] Help"
-     Write-Host "[ q ]Quit."
+     Write-Host "[ q ] Quit"
 	 Write-Host ""
 
 While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
@@ -136,7 +136,7 @@ function PrinterMenu
 
 	 Write-Host "[ i ] Install dependancies"
 	 Write-Host "[ h ] Help"
-     Write-Host "[ q ]Quit."
+     Write-Host "[ q ] Quit"
 	 Write-Host ""
 
 While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
@@ -179,7 +179,7 @@ function DiskMenu
 
 	 Write-Host "[ i ] Install dependancies"
 	 Write-Host "[ h ] Help"
-     Write-Host "[ q ]Quit."
+     Write-Host "[ q ] Quit"
 	 Write-Host ""
 
 While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
@@ -222,7 +222,7 @@ function ActiveDirectoryMenu
 
 	 Write-Host "[ i ] Install dependancies"
 	 Write-Host "[ h ] Help"
-     Write-Host "[ q ]Quit."
+     Write-Host "[ q ] Quit"
 	 Write-Host ""
 
 While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
@@ -265,7 +265,7 @@ function UpdatingMenu
 
 	 Write-Host "[ i ] Install dependancies"
 	 Write-Host "[ h ] Help"
-     Write-Host "[ q ]Quit."
+     Write-Host "[ q ] Quit"
 	 Write-Host ""
 
 While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
@@ -308,7 +308,7 @@ function MonitoringMenu
 
 	 Write-Host "[ i ] Install dependancies"
 	 Write-Host "[ h ] Help"
-     Write-Host "[ q ]Quit."
+     Write-Host "[ q ] Quit"
 	 Write-Host ""
 
 While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
@@ -351,7 +351,7 @@ function MaintanenceMenu
 
 	 Write-Host "[ i ] Install dependancies"
 	 Write-Host "[ h ] Help"
-     Write-Host "[ q ]Quit."
+     Write-Host "[ q ] Quit"
 	 Write-Host ""
 
 While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
@@ -394,7 +394,7 @@ function ShortcutsMenu
 
 	 Write-Host "[ i ] Install dependancies"
 	 Write-Host "[ h ] Help"
-     Write-Host "[ q ]Quit."
+     Write-Host "[ q ] Quit"
 	 Write-Host ""
 
 While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
@@ -437,7 +437,7 @@ function BasicActionsMenu
 
 	 Write-Host "[ i ] Install dependancies"
 	 Write-Host "[ h ] Help"
-     Write-Host "[ q ]Quit."
+     Write-Host "[ q ] Quit"
 	 Write-Host ""
 
 While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
@@ -480,7 +480,7 @@ function DeviceMenu
 
 	 Write-Host "[ i ] Install dependancies"
 	 Write-Host "[ h ] Help"
-     Write-Host "[ q ]Quit."
+     Write-Host "[ q ] Quit"
 	 Write-Host ""
 
 While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
@@ -523,7 +523,7 @@ function InstallMenu
 
 	 Write-Host "[ i ] Install dependancies"
 	 Write-Host "[ h ] Help"
-     Write-Host "[ q ]Quit."
+     Write-Host "[ q ] Quit"
 	 Write-Host ""
 
 While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
@@ -566,7 +566,7 @@ function HelpMenu
 
 	 Write-Host "[ i ] Install dependancies"
 	 Write-Host "[ h ] Help"
-     Write-Host "[ q ]Quit."
+     Write-Host "[ q ] Quit"
 	 Write-Host ""
 
 While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
@@ -606,11 +606,11 @@ function MainMenu
 
 	 Write-Host "[ i ] Install dependancies"
 	 Write-Host "[ h ] Help"
-     Write-Host "[ q ]Quit."
+     Write-Host "[ q ] Quit"
 	 Write-Host ""
 
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 'a',1,2,3,4,5,6,7,8,9,10,'h','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 'a',1,2,3,4,5,6,7,8,9,10,'h','q','i') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
