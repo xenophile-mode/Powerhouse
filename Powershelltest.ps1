@@ -1,5 +1,5 @@
 #Script/command functions
-Function GetVolume {Get-Printer ; Get-Disk | Out-Default}
+Function GetVolume {Get-Printer | Out-Default ; Get-Disk | Out-Default}
 
 #Menu Title Functions
 Function MenuTitle {
@@ -15,6 +15,9 @@ Function MenuTitle {
      Write-Host " -Tools: 4"	 
      Write-Host ""
 	 Write-Host ""
+	 Get-Date
+	 Write-Host ""
+	 $env:computername 
      Write-Host ""
 	 
      Write-Host "====================== $Title ======================"
@@ -23,10 +26,10 @@ Function MenuTitle {
 
 
 #Test submenu
-function OtherMenu
+function ListToolsMenu
 {
      param (
-           [string]$Title = 'Other Menu'
+           [string]$Title = 'All tools'
      )
 	 MenuTitle
 	 Write-Host '
@@ -50,7 +53,7 @@ Switch ($IDSelection) {
 	
 	'q' { exit }
 }
-	 OtherMenu
+	 ListToolsMenu
 }
 
 
@@ -60,21 +63,33 @@ function Show-MainMenu
            [string]$Title = 'Main Menu'
      )
 	 MenuTitle
-	 Write-Host '
-  [ 1 ] GetVolume
-  [ 2 ] Other Menu
-  
-  [ q ] Quit
-  '
+	 Write-Host "[ a ] List all tools"
+     Write-Host "[ 1 ] Networking tools"
+     Write-Host "[ 2 ] Printer tools"
+     Write-Host "[ 3 ] Disk tools"
+	 Write-Host "[ 4 ] Active Directory tools"
+	 Write-Host "[ 5 ] Updating tools"
+	 Write-Host "[ 6 ] Monitoring tools"
+	 Write-Host "[ 7 ] Maintanence scripts"
+	 Write-Host "[ 8 ] Shortcuts"
+	 Write-Host "[ 9 ] Basic PC actions"
+	 Write-Host "[ 10 ] Device tools"
+	 Write-Host ""
+
+	 Write-Host "[ i ] Install dependancies"
+	 Write-Host "[ h ] Help"
+     Write-Host "[ q ]Quit."
+	 Write-Host ""
 
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,'q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 'a',1,2,'q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
 
 Switch ($IDSelection) {
-    1 { GetVolume }
+    'a' {cls ; ListToolsMenu}
+	1 { GetVolume }
     2 { cls ; OtherMenu }
     'q' { exit }
 }
