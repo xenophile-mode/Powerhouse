@@ -1,8 +1,10 @@
 #Script/command functions
 Function GetVolume {Get-Printer | Out-Default ; Get-Disk | Out-Default}
-Function UpdateDP {Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate ; Get-Printer | Out-Default }
+Function UpdateDP {Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate | Out-Default }
+Function InstallWU { Install-WindowsUpdate -AcceptAll -AutoReboot | Out-Default }
 Function CheckOUD {get-wulist -criteria "isinstalled=0 and deploymentaction=*" | Out-Default}
 Function CheckUD {get-wulist | Out-Default}
+Function InstallOWU {Install-WindowsUpdate -criteria "isinstalled=0 and deploymentaction=*" -AutoReboot | Out-Default }
 
 
 
@@ -252,7 +254,7 @@ function UpdatingMenu
 	 MenuTitle
      Write-Host "[ 1 ] List Windows Updates"
      Write-Host "[ 2 ] List Optional Updates"
-     Write-Host "[ 3 ] Disk tools"
+     Write-Host "[ 3 ] Install Windows Updates"
 	 Write-Host "[ 4 ] Active Directory tools"
 	 Write-Host "[ 5 ] Updating tools"
 	 Write-Host "[ 6 ] Monitoring tools"
@@ -279,7 +281,7 @@ Switch ($IDSelection) {
 	'm' { cls ; MainMenu }
     1 { cls ; CheckUD }
     2 { cls ; CheckOUD }
-	3 { cls ; Show-MainMenu }
+	3 { cls ; InstallWU	}
 	
 	'q' { exit }
 }
