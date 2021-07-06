@@ -13,11 +13,9 @@ Function MenuTitle {
      Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
      Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
      Write-Host ""
-	 Write-Host " -Author: Erick Gonzales"
-     Write-Host " -Tools: 4"	 
+	 Write-Host "Author: Erick Gonzales                         Tools:4"
      Write-Host ""
-	 Write-Host ""
-	 Write-Host "Hostname:$($env:computername)                 $(Get-Date)" 
+	 Write-Host "Hostname:$($env:computername)            $(Get-Date)" 
      Write-Host ""
 	 
      Write-Host "====================== $Title ======================"
