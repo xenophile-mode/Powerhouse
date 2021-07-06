@@ -1,5 +1,6 @@
 #Script/command functions
 Function GetVolume {Get-Printer | Out-Default ; Get-Disk | Out-Default}
+Function UpdateDP {Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate ; Get-Printer | Out-Default }
 
 
 #Menu Title Functions
@@ -505,7 +506,7 @@ function InstallMenu
            [string]$Title = 'Install Dependancies'
      )
 	 MenuTitle
-	 Write-Host "[ a ] List all tools"
+	 Write-Host "[ 1 ] Install Windows Update Dependancies"
      Write-Host "[ 1 ] Networking tools"
      Write-Host "[ 2 ] Printer tools"
      Write-Host "[ 3 ] Disk tools"
@@ -533,13 +534,13 @@ While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3
 
 Switch ($IDSelection) {
 	'm' { cls ; MainMenu }
-    1 { cls ; GetVolume }
+    1 { cls ; Get-Printer ; Get-Disk | Out-Default }
     2 { cls ; echo test }
 	3 { cls ; Show-MainMenu }
 	
 	'q' { exit }
 }
-	 InstallMenu
+	 pause ; cls ; InstallMenu
 }
 
 function HelpMenu
@@ -632,7 +633,7 @@ Switch ($IDSelection) {
     'h'	{ cls ; HelpMenu }
 	'q' { exit }
 }
-	 MainMenu
+	 cls ; MainMenu
 }
 
 
