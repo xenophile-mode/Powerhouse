@@ -1,6 +1,9 @@
 #Script/command functions
 Function GetVolume {Get-Printer | Out-Default ; Get-Disk | Out-Default}
 Function UpdateDP {Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate ; Get-Printer | Out-Default }
+Function CheckOUD {get-wulist -criteria "isinstalled=0 and deploymentaction=*" | Out-Default}
+Function CheckUD {get-wulist | Out-Default}
+
 
 
 #Menu Title Functions
@@ -15,7 +18,8 @@ Function MenuTitle {
      Write-Host ""
 	 Write-Host "Author: Erick Gonzales                         Tools:4"
      Write-Host ""
-	 Write-Host "Hostname:$($env:computername)            $(Get-Date)" 
+	 Write-Host "Hostname\User: $(whoami)"
+     Get-Date	 
      Write-Host ""
 	 
      Write-Host "====================== $Title ======================"
@@ -246,9 +250,8 @@ function UpdatingMenu
            [string]$Title = 'Updating tools'
      )
 	 MenuTitle
-	 Write-Host "[ a ] List all tools"
-     Write-Host "[ 1 ] Networking tools"
-     Write-Host "[ 2 ] Printer tools"
+     Write-Host "[ 1 ] List Windows Updates"
+     Write-Host "[ 2 ] List Optional Updates"
      Write-Host "[ 3 ] Disk tools"
 	 Write-Host "[ 4 ] Active Directory tools"
 	 Write-Host "[ 5 ] Updating tools"
@@ -274,13 +277,13 @@ While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3
 
 Switch ($IDSelection) {
 	'm' { cls ; MainMenu }
-    1 { cls ; GetVolume }
-    2 { cls ; echo test }
+    1 { cls ; CheckUD }
+    2 { cls ; CheckOUD }
 	3 { cls ; Show-MainMenu }
 	
 	'q' { exit }
 }
-	 UpdatingMenu
+	 pause ; cls ; UpdatingMenu
 }
 
 function MonitoringMenu
@@ -532,7 +535,7 @@ While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3
 
 Switch ($IDSelection) {
 	'm' { cls ; MainMenu }
-    1 { cls ; Get-Printer ; Get-Disk | Out-Default }
+    1 { cls ; UpdateDP | Out-Default }
     2 { cls ; echo test }
 	3 { cls ; Show-MainMenu }
 	

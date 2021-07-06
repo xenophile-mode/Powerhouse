@@ -1,5 +1,19 @@
 *See if we can setup remote powershell*
 
+#Disk cleanup
+cleanmgr
+
+#Uptime
+Get-Uptime
+
+#Create an alias
+Net-Alias
+
+#Send output to a printer for a test print
+Out-Printer
+
+#Display directory tree
+tree
 
 #Install update script dependancies
  Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ;
