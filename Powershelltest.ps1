@@ -39,7 +39,7 @@ Function PrinterPort {Get-PrinterPort | Out-Default}
 Function PrintJob {Get-PrintJob | Out-Default}
 Function PrinterPropterty {Get-PrinterProperty | Out-Default}
 Function Devices {gwmi Win32_PnPSignedDriver | select devicename,driverversion ; gwmi Win32_SystemDriver | select name,@{n="version";e={(gi $_.pathname).VersionInfo.FileVersion}} | Out-Default}
-Function GpudateRB {gpupdate /force /boot}
+Function GpudateRB {gpupdate /force ; shutdown /r }
 
 
 
@@ -302,8 +302,6 @@ function UpdatingMenu
 	 
 	 Write-Host ""
 
-	 Write-Host "[ i ] Install dependancies"
-	 Write-Host "[ h ] Help"
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
