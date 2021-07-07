@@ -1,6 +1,6 @@
 #Script/command functions
 Function UpdateDP {Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate | Out-Default }
-Function InstallWU { Install-WindowsUpdate -AcceptAll -AutoReboot | Out-Default }
+Function InstallWU {Install-WindowsUpdate -AcceptAll -AutoReboot | Out-Default}
 Function CheckOUD {get-wulist -criteria "isinstalled=0 and deploymentaction=*" | Out-Default}
 Function CheckUD {get-wulist | Out-Default}
 Function InstallOWU {Install-WindowsUpdate -criteria "isinstalled=0 and deploymentaction=*" -AutoReboot | Out-Default }
@@ -11,13 +11,13 @@ Function Tree {tree}
 Function UpdateWUCache { Get-Service -Name wuauserv,bits,cryptsvc | Stop-Service ; Remove-Item -Path "$env:ALLUSERSPROFILE\Application Data\Microsoft\Network\Downloader\qmgr*.dat" ; Get-Service -Name wuauserv,bits,cryptsvc | Start-Service ; Write-Host "***Windows Update Cache Updated***" | Out-Default }
 Function InstallWUGP { gpupdate /force ; Install-WindowsUpdate -AcceptAll -Autoreboot }
 Function CleanupScript { Clear-RecycleBin ; Clear-BCCache ; Remove-Item -Path $env:TEMP -Recurse -Force -ErrorAction SilentlyContinue }
-Function NetStatScript { echo ***YOUR-HOSTNAME*** ; hostname ; echo ***NetworkAdapterStats*** ; Get-NetAdapterStatistics ; echo ***MACAddresses*** ; getmac /v ; echo ***IPConfiguration*** ; ipconfig ; echo ***PingingGoogle.com*** ; ping google.com ; echo ***NetworkStatistics*** ; netstat -e ; echo ***Printers*** ; Get-Printer | Out-Default ; echo ***RunningSpeedtest*** ; C:\Users\Administrator\Downloads\ookla-speedtest-1.0.0-win64\speedtest | Out-Default } 
-Function DiskStatScript { Get-Disk ; Get-Partition ; Get-PhysicalDiskStorageNodeView | Out-Default}
+Function NetStatScript { echo ***YOUR-HOSTNAME*** ; hostname ; echo ***NetworkAdapterStats*** ; Get-NetAdapterStatistics ; echo ***MACAddresses*** ; getmac /v ; echo ***IPConfiguration*** ; ipconfig | Out-Default ; echo ***PingingGoogle.com*** ; ping google.com ; echo ***NetworkStatistics*** ; netstat -e ; echo ***Printers*** ; Get-Printer | Out-Default ; echo ***RunningSpeedtest*** ; C:\Users\Administrator\Downloads\ookla-speedtest-1.0.0-win64\speedtest | Out-Default } 
+Function DiskStatScript { Get-Disk | Out-Default ; Get-Partition | Out-Default ; Get-PhysicalDiskStorageNodeView | Out-Default}
 Function Chkdsk {chkdsk /scan}
-Function Process40mb {Get-Process | Where-Object {$_.WorkingSet -gt 40000000}}
+Function Process40mb {Get-Process | Where-Object {$_.WorkingSet -gt 40000000} | Out-Default}
 Function SecurityScript {Update-MpSignature ; echo ***UPDATED-ANTIMALWARE-DEFINITIONS*** ; Start-MpScan -ScanType QuickScan ; echo ***SCAN-COMPLETED*** ; Get-MpComputerStatus ; Get-MpThreat ; Get-MpThreatDetection}
-Function BiosInfo {Get-WmiObject -Class Win32_Bios | Format-List -Property *}
-Function ActiveServices {Get-Service | Where-Object {$_.Status -eq "Running"}}
+Function BiosInfo {Get-CIMInstance -Class Win32_Bios | Format-List -Property *}
+Function ActiveServices {Get-Service | Where-Object {$_.Status -eq "Running"} | Out-Default}
 Function RecentEvents {Get-EventLog -LogName System -Newest 30}
 Function DomainStat {Get-ADDomain}
 Function ADUsers {Get-ADUser -Filter *}
@@ -26,9 +26,7 @@ Function LockedUsers {Search-ADAccount -LockedOut}
 Function DisabledUsers {Search-ADAccount -AccountDisabled}
 Function UnlockAccount {Unlock-ADAccount -Identity PattiFu}
 Function PwChange {Set-ADAccountPassword -Identity elisada -OldPassword (ConvertTo-SecureString -AsPlainText "p@ssw0rd" -Force) -NewPassword (ConvertTo-SecureString -AsPlainText "qwert@12345" -Force) ; Set-ADUser -Identity username -ChangePasswordAtLogon $true }
-Function ntop {ntop}
 Function SpeedTest {C:\Users\Administrator\Downloads\ookla-speedtest-1.0.0-win64\speedtest | Out-Default}
-Function IpConfig {ipconfig | Out-Default}
 Function GetDisk {Get-Disk}
 Function MAC {getmac /v}
 Function PrinterStats {Get-Printer ; Get-PrintConfiguration ; Get-PrinterDriver ; Get-PrinterPort ; Get-PrintJob ; Get-PrinterProperty | Out-Default}
@@ -38,7 +36,7 @@ Function PrintConfig {Get-PrintConfiguration | Out-Default}
 Function PrinterPort {Get-PrinterPort | Out-Default}
 Function PrintJob {Get-PrintJob | Out-Default}
 Function PrinterPropterty {Get-PrinterProperty | Out-Default}
-Function Devices {gwmi Win32_PnPSignedDriver | select devicename,driverversion ; gwmi Win32_SystemDriver | select name,@{n="version";e={(gi $_.pathname).VersionInfo.FileVersion}} | Out-Default}
+Function Devices {Get-CIMInstance Win32_PnPSignedDriver | select devicename,driverversion ; Get-CIMInstance Win32_SystemDriver | select name,@{n="version";e={(gi $_.pathname).VersionInfo.FileVersion}} | Out-Default}
 Function GpudateRB {gpupdate /force ; shutdown /r }
 
 
@@ -332,41 +330,36 @@ function Stats/MonitoringMenu
            [string]$Title = 'Stats/Monitoring tools'
      )
 	 MenuTitle
-	 Write-Host "[ a ] List all tools"
-     Write-Host "[ 1 ] Networking tools"
-     Write-Host "[ 2 ] Printer tools"
-     Write-Host "[ 3 ] Disk tools"
-	 Write-Host "[ 4 ] Active Directory tools"
-	 Write-Host "[ 5 ] Updating tools"
-	 Write-Host "[ 6 ] Monitoring tools"
-	 Write-Host "[ 7 ] Maintanence scripts"
-	 Write-Host "[ 8 ] Shortcuts"
-	 Write-Host "[ 9 ] Basic PC actions"
-	 Write-Host "[ 10 ] Device tools"
+     Write-Host "[ 1 ] Terminal Task Manager"
+     Write-Host "[ 2 ] Processes"
+     Write-Host "[ 3 ] Active Services"
+	 Write-Host "[ 4 ] Network Stats/Info"
+	 Write-Host "[ 5 ] Disk Stats/Info"
+	 Write-Host "[ 6 ] BIOS Info"
 	 Write-Host "[ m ] Main Menu"
 
 	 
 	 Write-Host ""
-
-	 Write-Host "[ i ] Install dependancies"
-	 Write-Host "[ h ] Help"
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,'m','q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
 
 Switch ($IDSelection) {
 	'm' { cls ; MainMenu }
-    1 { cls ; GetVolume }
-    2 { cls ; echo test }
-	3 { cls ; Show-MainMenu }
-	
-	'q' { exit }
+    1 {ntop | Out-Default }
+    2 { cls ; Process40mb }
+	3 { cls ; ActiveServices }
+	4 { cls ; NetStatScript }
+	5 { cls ; DiskStatScript }
+	6 { cls ; BiosInfo }
+
+    'q' { exit }
 }
-	 MonitoringMenu
+	 pause ; cls ; Stats/MonitoringMenu
 }
 
 function MaintanenceMenu
@@ -677,5 +670,7 @@ Switch ($IDSelection) {
 	 cls ; MainMenu
 }
 
+#Import modules
+Import-Module PSWindowsUpdate
 
 cls ; MainMenu
