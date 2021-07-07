@@ -7,7 +7,7 @@ cleanmgr
 Get-Uptime
 
 #Create an alias
-Net-Alias
+New-Alias
 
 #Send output to a printer for a test print
 Out-Printer
@@ -45,7 +45,9 @@ echo ***NetworkStatistics*** ; netstat -e
 ; C:\Users\Administrator\Downloads\ookla-speedtest-1.0.0-win64\speedtest
 
 #Disk Stats Script and run chkdsk /scan
-Get-Disk ; Get-Partition ; Get-PhysicalDiskStorageNodeView ; chkdsk /scan  
+Get-Disk ; Get-Partition ; Get-PhysicalDiskStorageNodeView 
+
+chkdsk /scan  
 
 #Display processes with at leat 40mb
 Get-Process | Where-Object {$_.WorkingSet -gt 40000000}  
@@ -53,9 +55,14 @@ Get-Process | Where-Object {$_.WorkingSet -gt 40000000}
 #Security stats/script
 Update-MpSignature ; echo ***UPDATED-ANTIMALWARE-DEFINITIONS*** ; Start-MpScan -ScanType QuickScan ; echo ***SCAN-COMPLETED*** ; Get-MpComputerStatus ; Get-MpThreat ; Get-MpThreatDetection ;   
 
+
+
+#############################################
 #List devices
 gwmi Win32_PnPSignedDriver | select devicename,driverversion
 gwmi Win32_SystemDriver | select name,@{n="version";e={(gi $_.pathname).VersionInfo.FileVersion}}
+
+
 
 #List bios information
 Get-WmiObject -Class Win32_Bios | Format-List -Property *

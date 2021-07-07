@@ -1,10 +1,50 @@
 #Script/command functions
-Function GetVolume {Get-Printer | Out-Default ; Get-Disk | Out-Default}
 Function UpdateDP {Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate | Out-Default }
 Function InstallWU { Install-WindowsUpdate -AcceptAll -AutoReboot | Out-Default }
 Function CheckOUD {get-wulist -criteria "isinstalled=0 and deploymentaction=*" | Out-Default}
 Function CheckUD {get-wulist | Out-Default}
 Function InstallOWU {Install-WindowsUpdate -criteria "isinstalled=0 and deploymentaction=*" -AutoReboot | Out-Default }
+Function Clean {cleanmgr ; echo ***Running Cleanmgr***}
+Function Alias { New-Alias }
+Function TestPrinter { Out-Printer }
+Function Tree {tree} 
+Function UpdateUDCache { Get-Service -Name wuauserv,bits,cryptsvc | Stop-Service ; Remove-Item -Path "$env:ALLUSERSPROFILE\Application Data\Microsoft\Network\Downloader\qmgr*.dat" ; Get-Service -Name wuauserv,bits,cryptsvc | Start-Service | Out-Default }
+Function InstallWUGP { gpupdate /force ; Install-WindowsUpdate -AcceptAll -Autoreboot }
+Function CleanupScript { Clear-RecycleBin ; Clear-BCCache ; Remove-Item -Path $env:TEMP -Recurse -Force -ErrorAction SilentlyContinue }
+Function NetStatScript { echo ***YOUR-HOSTNAME*** ; hostname ; echo ***NetworkAdapterStats*** ; Get-NetAdapterStatistics ; echo ***MACAddresses*** ; getmac /v ; echo ***IPConfiguration*** ; ipconfig ; echo ***PingingGoogle.com*** ; ping google.com ; echo ***NetworkStatistics*** ; netstat -e ; echo ***Printers*** ; Get-Printer | Out-Default ; echo ***RunningSpeedtest*** ; C:\Users\Administrator\Downloads\ookla-speedtest-1.0.0-win64\speedtest | Out-Default } 
+Function DiskStatScript { Get-Disk ; Get-Partition ; Get-PhysicalDiskStorageNodeView | Out-Default}
+Function Chkdsk {chkdsk /scan}
+Function Process40mb {Get-Process | Where-Object {$_.WorkingSet -gt 40000000}}
+Function SecurityScript {Update-MpSignature ; echo ***UPDATED-ANTIMALWARE-DEFINITIONS*** ; Start-MpScan -ScanType QuickScan ; echo ***SCAN-COMPLETED*** ; Get-MpComputerStatus ; Get-MpThreat ; Get-MpThreatDetection}
+Function BiosInfo {Get-WmiObject -Class Win32_Bios | Format-List -Property *}
+Function ActiveServices {Get-Service | Where-Object {$_.Status -eq "Running"}}
+Function RecentEvents {Get-EventLog -LogName System -Newest 30}
+Function DomainStat {Get-ADDomain}
+Function ADUsers {Get-ADUser -Filter *}
+Function SearchUsers {get-Aduser -Filter {name -like "*robert*"}}
+Function LockedUsers {Search-ADAccount -LockedOut}
+Function DisabledUsers {Search-ADAccount -AccountDisabled}
+Function UnlockAccount {Unlock-ADAccount -Identity PattiFu}
+Function PwChange {Set-ADAccountPassword -Identity elisada -OldPassword (ConvertTo-SecureString -AsPlainText "p@ssw0rd" -Force) -NewPassword (ConvertTo-SecureString -AsPlainText "qwert@12345" -Force) ; Set-ADUser -Identity username -ChangePasswordAtLogon $true }
+Function ntop {ntop}
+Function SpeedTest {C:\Users\Administrator\Downloads\ookla-speedtest-1.0.0-win64\speedtest | Out-Default}
+Function IpConfig {ipconfig | Out-Default}
+Function GetDisk {Get-Disk}
+Function MAC {getmac /v}
+Function PrinterStats {Get-Printer ; Get-PrintConfiguration ; Get-PrinterDriver ; Get-PrinterPort ; Get-PrintJob ; Get-PrinterProperty | Out-Default}
+Function Printer {Get-Printer | Out-Default}
+Function PrinterDriver {Get-PrinterDriver | Out-Default}
+Function PrintConfig {Get-PrintConfiguration | Out-Default}
+Function PrinterPort {Get-PrinterPort | Out-Default}
+Function PrintJob {Get-PrintJob | Out-Default}
+Function PrinterPropterty {Get-PrinterProperty | Out-Default}
+Function Devices {gwmi Win32_PnPSignedDriver | select devicename,driverversion ; gwmi Win32_SystemDriver | select name,@{n="version";e={(gi $_.pathname).VersionInfo.FileVersion}} | Out-Default}
+
+
+
+
+
+
 
 
 
@@ -20,8 +60,7 @@ Function MenuTitle {
      Write-Host ""
 	 Write-Host "Author: Erick Gonzales                         Tools:4"
      Write-Host ""
-	 Write-Host "Hostname\User: $(whoami)"
-     Get-Date	 
+	 whoami ; Get-Date	 
      Write-Host ""
 	 
      Write-Host "====================== $Title ======================"
@@ -288,10 +327,10 @@ Switch ($IDSelection) {
 	 pause ; cls ; UpdatingMenu
 }
 
-function MonitoringMenu
+function Stats/MonitoringMenu
 {
      param (
-           [string]$Title = 'Monitoring tools'
+           [string]$Title = 'Stats/Monitoring tools'
      )
 	 MenuTitle
 	 Write-Host "[ a ] List all tools"
@@ -626,7 +665,7 @@ Switch ($IDSelection) {
 	3 { cls ; DiskMenu }
 	4 { cls ; ActiveDirectoryMenu }
     5 { cls ; UpdatingMenu }
-    6 { cls ; MonitoringMenu }
+    6 { cls ; Stats/MonitoringMenu }
     7 { cls ; MaintanenceMenu }
     8 { cls ; ShortcutsMenu }
     9 { cls ; BasicActionsMenu }
