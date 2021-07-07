@@ -8,7 +8,7 @@ Function Clean {cleanmgr ; echo ***Running Cleanmgr***}
 Function Alias { New-Alias }
 Function TestPrinter { Out-Printer }
 Function Tree {tree} 
-Function UpdateUDCache { Get-Service -Name wuauserv,bits,cryptsvc | Stop-Service ; Remove-Item -Path "$env:ALLUSERSPROFILE\Application Data\Microsoft\Network\Downloader\qmgr*.dat" ; Get-Service -Name wuauserv,bits,cryptsvc | Start-Service | Out-Default }
+Function UpdateWUCache { Get-Service -Name wuauserv,bits,cryptsvc | Stop-Service ; Remove-Item -Path "$env:ALLUSERSPROFILE\Application Data\Microsoft\Network\Downloader\qmgr*.dat" ; Get-Service -Name wuauserv,bits,cryptsvc | Start-Service ; Write-Host "***Windows Update Cache Updated***" | Out-Default }
 Function InstallWUGP { gpupdate /force ; Install-WindowsUpdate -AcceptAll -Autoreboot }
 Function CleanupScript { Clear-RecycleBin ; Clear-BCCache ; Remove-Item -Path $env:TEMP -Recurse -Force -ErrorAction SilentlyContinue }
 Function NetStatScript { echo ***YOUR-HOSTNAME*** ; hostname ; echo ***NetworkAdapterStats*** ; Get-NetAdapterStatistics ; echo ***MACAddresses*** ; getmac /v ; echo ***IPConfiguration*** ; ipconfig ; echo ***PingingGoogle.com*** ; ping google.com ; echo ***NetworkStatistics*** ; netstat -e ; echo ***Printers*** ; Get-Printer | Out-Default ; echo ***RunningSpeedtest*** ; C:\Users\Administrator\Downloads\ookla-speedtest-1.0.0-win64\speedtest | Out-Default } 
@@ -39,6 +39,7 @@ Function PrinterPort {Get-PrinterPort | Out-Default}
 Function PrintJob {Get-PrintJob | Out-Default}
 Function PrinterPropterty {Get-PrinterProperty | Out-Default}
 Function Devices {gwmi Win32_PnPSignedDriver | select devicename,driverversion ; gwmi Win32_SystemDriver | select name,@{n="version";e={(gi $_.pathname).VersionInfo.FileVersion}} | Out-Default}
+Function GpudateRB {gpupdate /force /boot}
 
 
 
@@ -294,15 +295,10 @@ function UpdatingMenu
      Write-Host "[ 1 ] List Windows Updates"
      Write-Host "[ 2 ] List Optional Updates"
      Write-Host "[ 3 ] Install Windows Updates"
-	 Write-Host "[ 4 ] Active Directory tools"
-	 Write-Host "[ 5 ] Updating tools"
-	 Write-Host "[ 6 ] Monitoring tools"
-	 Write-Host "[ 7 ] Maintanence scripts"
-	 Write-Host "[ 8 ] Shortcuts"
-	 Write-Host "[ 9 ] Basic PC actions"
-	 Write-Host "[ 10 ] Device tools"
-	 Write-Host "[ m ] Main Menu"
-
+	 Write-Host "[ 4 ] Insatll Optional Windows Updates"
+	 Write-Host "[ 5 ] Updated Windows Update Cache"
+	 Write-Host "[ 6 ] Group Policy Update and Windows Update"
+	 Write-Host "[ 7 ] Group Policy Update with auto reboot"
 	 
 	 Write-Host ""
 
@@ -311,7 +307,7 @@ function UpdatingMenu
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,'m','q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -321,7 +317,12 @@ Switch ($IDSelection) {
     1 { cls ; CheckUD }
     2 { cls ; CheckOUD }
 	3 { cls ; InstallWU	}
-	
+	4 { cls ; InstallOWU}
+	5 { cls ; UpdateWUCache}
+	6 { cls ; InstallWUGP}
+	7 { cls ; GpudateRB}
+
+
 	'q' { exit }
 }
 	 pause ; cls ; UpdatingMenu
