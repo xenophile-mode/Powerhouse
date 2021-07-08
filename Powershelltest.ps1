@@ -1,5 +1,5 @@
 #Script/command functions
-Function InstallDP {Write-Host "Installing Scoop" Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh') ; Write-Host "Installing ntop"; scoop install ntop; Write-Host "Installing Speedtest-CLI" ; scoop insatll speedtest-cli; Write-Host "Installing PSWindowsUpdate Module" ; Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate | Out-Default }
+Function InstallDPP {Write-Host "Installing Scoop" ; Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh') ; Write-Host "Installing ntop"; scoop install ntop; Write-Host "Installing Speedtest-CLI" ; scoop insatll speedtest-cli; Write-Host "Installing PSWindowsUpdate Module" ; Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate | Out-Default }
 Function InstallWU {Install-WindowsUpdate -AcceptAll -AutoReboot | Out-Default}
 Function CheckOUD {get-wulist -criteria "isinstalled=0 and deploymentaction=*" | Out-Default}
 Function CheckUD {get-wulist | Out-Default}
@@ -488,11 +488,11 @@ Switch ($IDSelection) {
 	's' { shutdown /s /t 1 }
     'r' { shutdown /r /t 1 }
     'l' { shutdown /l }
-    'i' { cls ; InstallDP }
+    'i' { cls ; InstallDPP }
     'h'	{ cls ; HelpMenu }
 	'q' { cls ; exit }
 }
-	 cls ; MainMenu
+	 pause ; cls ; MainMenu
 }
 
 #Import modules
