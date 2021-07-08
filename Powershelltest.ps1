@@ -37,6 +37,7 @@ Function PrintJob {Get-PrintJob | Out-Default}
 Function PrinterPropterty {Get-PrinterProperty | Out-Default}
 Function Devices {Get-CIMInstance Win32_PnPSignedDriver | select devicename,driverversion ; Get-CIMInstance Win32_SystemDriver | select name,@{n="version";e={(gi $_.pathname).VersionInfo.FileVersion}} | Out-Default}
 Function GpudateRB {gpupdate /force ; shutdown /r }
+Function GetVersion {Get-ComputerInfo -Property "*version" | Out-Default}
 
 
 
@@ -44,7 +45,8 @@ Function GpudateRB {gpupdate /force ; shutdown /r }
 
 
 
-
+#Install Dependancies function	
+Function InstallDP {Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate | Out-Default}
 
 #Menu Title Functions
 Function MenuTitle {
@@ -56,7 +58,7 @@ Function MenuTitle {
      Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
      Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
      Write-Host ""
-	 Write-Host "Author: Erick Gonzales                         Tools:4"
+	 Write-Host "Author: Erick Gonzales"
      Write-Host ""
 	 whoami ; Get-Date	 
      Write-Host ""
@@ -67,92 +69,50 @@ Function MenuTitle {
 
 
 #Test submenu
-function ListToolsMenu
-{
-     param (
-           [string]$Title = 'Networking tools'
-     )
-	 MenuTitle
-	 Write-Host "[ a ] List all tools"
-     Write-Host "[ 1 ] Networking tools"
-     Write-Host "[ 2 ] Printer tools"
-     Write-Host "[ 3 ] Disk tools"
-	 Write-Host "[ 4 ] Active Directory tools"
-	 Write-Host "[ 5 ] Updating tools"
-	 Write-Host "[ 6 ] Monitoring tools"
-	 Write-Host "[ 7 ] Maintanence scripts"
-	 Write-Host "[ 8 ] Shortcuts"
-	 Write-Host "[ 9 ] Basic PC actions"
-	 Write-Host "[ 10 ] Device tools"
-	 Write-Host "[ m ] Main Menu"
-
-	 
-	 Write-Host ""
-
-	 Write-Host "[ i ] Install dependancies"
-	 Write-Host "[ h ] Help"
-     Write-Host "[ q ] Quit"
-	 Write-Host ""
-
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
-{ 
-    Write-Warning "$Selection is not a valid option" 
-}
-
-Switch ($IDSelection) {
-	'm' { cls ; MainMenu }
-    1 { cls ; GetVolume }
-    2 { cls ; echo test }
-	3 { cls ; Show-MainMenu }
-	
-	'q' { exit }
-}
-	 ListToolsMenu
-}
-
-
 function NetworkingMenu
 {
      param (
-           [string]$Title = 'Networking tools'
+           [string]$Title = 'Network tools'
      )
 	 MenuTitle
-	 Write-Host "[ a ] List all tools"
-     Write-Host "[ 1 ] Networking tools"
-     Write-Host "[ 2 ] Printer tools"
-     Write-Host "[ 3 ] Disk tools"
-	 Write-Host "[ 4 ] Active Directory tools"
-	 Write-Host "[ 5 ] Updating tools"
-	 Write-Host "[ 6 ] Monitoring tools"
-	 Write-Host "[ 7 ] Maintanence scripts"
-	 Write-Host "[ 8 ] Shortcuts"
-	 Write-Host "[ 9 ] Basic PC actions"
-	 Write-Host "[ 10 ] Device tools"
+     Write-Host "[ 1 ] Network Stats/Info"
+     Write-Host "[ 2 ] IP Configuration Info"
+     Write-Host "[ 3 ] MAC Address Info"
+	 Write-Host "[ 4 ] Run Speedtest"
+	 Write-Host "[ 5 ] Ping Google.com"
+	 Write-Host "[ 6 ] Network Interface Statistics"
+	 Write-Host "[ 7 ] Run Security Script"
 	 Write-Host "[ m ] Main Menu"
 
 	 
 	 Write-Host ""
-
-	 Write-Host "[ i ] Install dependancies"
-	 Write-Host "[ h ] Help"
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,'m','q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
 
 Switch ($IDSelection) {
 	'm' { cls ; MainMenu }
-    1 { cls ; GetVolume }
-    2 { cls ; echo test }
-	3 { cls ; Show-MainMenu }
+    1 { cls ; NetworkStatScript }
+    2 { cls ; ipconfig | Out-Default}
+	3 { cls ; getmac /v | Out-Default}
+	4 { cls ; C:\Users\Administrator\Downloads\ookla-speedtest-1.0.0-win64\speedtest | Out-Default }
+	5 { cls ; echo ***PingingGoogle.com*** ; ping google.com | Out-Default }
+	6 { cls ; netstat -e | Out-Default}
+	7 { cls ; SecurityScript Out-Default}
+
+
+
+
 	
 	'q' { exit }
 }
-	 NetworkingMenu
+	 pause ; cls ; NetworkingMenu
 }
+
 
 function PrinterMenu
 {
@@ -160,41 +120,38 @@ function PrinterMenu
            [string]$Title = 'Printer tools'
      )
 	 MenuTitle
-	 Write-Host "[ a ] List all tools"
-     Write-Host "[ 1 ] Networking tools"
-     Write-Host "[ 2 ] Printer tools"
-     Write-Host "[ 3 ] Disk tools"
-	 Write-Host "[ 4 ] Active Directory tools"
-	 Write-Host "[ 5 ] Updating tools"
-	 Write-Host "[ 6 ] Monitoring tools"
-	 Write-Host "[ 7 ] Maintanence scripts"
-	 Write-Host "[ 8 ] Shortcuts"
-	 Write-Host "[ 9 ] Basic PC actions"
-	 Write-Host "[ 10 ] Device tools"
+     Write-Host "[ 1 ] All Printer Info"
+     Write-Host "[ 2 ] List Printers"
+     Write-Host "[ 3 ] Printer Drivers"
+	 Write-Host "[ 4 ] Printer Configuration"
+	 Write-Host "[ 5 ] Printer Port"
+	 Write-Host "[ 6 ] Print Jobs"
+	 Write-Host "[ 7 ] Printer Properties"
 	 Write-Host "[ m ] Main Menu"
 
 	 
 	 Write-Host ""
-
-	 Write-Host "[ i ] Install dependancies"
-	 Write-Host "[ h ] Help"
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,'m','q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
 
 Switch ($IDSelection) {
 	'm' { cls ; MainMenu }
-    1 { cls ; GetVolume }
-    2 { cls ; echo test }
-	3 { cls ; Show-MainMenu }
+    1 { cls ; PrinterStats }
+    2 { cls ; Printer }
+	3 { cls ; PrinterDriver }
+	4 { cls ; PrintConfig }
+	5 { cls ; PrinterPort }
+	6 { cls ; PrintJob }
+	7 { cls ; PrinterProperty }
 	
 	'q' { exit }
 }
-	 PrinterMenu
+	 pause ; cls ; PrinterMenu
 }
 
 function DiskMenu
@@ -332,6 +289,7 @@ function Stats/MonitoringMenu
 	 Write-Host "[ 4 ] Network Stats/Info"
 	 Write-Host "[ 5 ] Disk Stats/Info"
 	 Write-Host "[ 6 ] BIOS Info"
+	 Write-Host "[ 7 ] Version info"
 	 Write-Host "[ m ] Main Menu"
 
 	 
@@ -339,7 +297,7 @@ function Stats/MonitoringMenu
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,'m','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,'m','q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -352,6 +310,7 @@ Switch ($IDSelection) {
 	4 { cls ; NetStatScript }
 	5 { cls ; DiskStatScript }
 	6 { cls ; BiosInfo }
+	7 { cls ; GetVersion }
 
     'q' { exit }
 }
@@ -530,73 +489,17 @@ Switch ($IDSelection) {
 	 DeviceMenu
 }
 
-function InstallMenu
-{
-     param (
-           [string]$Title = 'Install Dependancies'
-     )
-	 MenuTitle
-	 Write-Host "[ 1 ] Install Windows Update Dependancies"
-     Write-Host "[ 1 ] Networking tools"
-     Write-Host "[ 2 ] Printer tools"
-     Write-Host "[ 3 ] Disk tools"
-	 Write-Host "[ 4 ] Active Directory tools"
-	 Write-Host "[ 5 ] Updating tools"
-	 Write-Host "[ 6 ] Monitoring tools"
-	 Write-Host "[ 7 ] Maintanence scripts"
-	 Write-Host "[ 8 ] Shortcuts"
-	 Write-Host "[ 9 ] Basic PC actions"
-	 Write-Host "[ 10 ] Device tools"
-	 Write-Host "[ m ] Main Menu"
-
-	 
-	 Write-Host ""
-
-	 Write-Host "[ i ] Install dependancies"
-	 Write-Host "[ h ] Help"
-     Write-Host "[ q ] Quit"
-	 Write-Host ""
-
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
-{ 
-    Write-Warning "$Selection is not a valid option" 
-}
-
-Switch ($IDSelection) {
-	'm' { cls ; MainMenu }
-    1 { cls ; UpdateDP | Out-Default }
-    2 { cls ; echo test }
-	3 { cls ; Show-MainMenu }
-	
-	'q' { exit }
-}
-	 pause ; cls ; InstallMenu
-}
-
 function HelpMenu
 {
      param (
            [string]$Title = 'Help Menu'
      )
 	 MenuTitle
-	 Write-Host "[ a ] List all tools"
-     Write-Host "[ 1 ] Networking tools"
-     Write-Host "[ 2 ] Printer tools"
-     Write-Host "[ 3 ] Disk tools"
-	 Write-Host "[ 4 ] Active Directory tools"
-	 Write-Host "[ 5 ] Updating tools"
-	 Write-Host "[ 6 ] Monitoring tools"
-	 Write-Host "[ 7 ] Maintanence scripts"
-	 Write-Host "[ 8 ] Shortcuts"
-	 Write-Host "[ 9 ] Basic PC actions"
-	 Write-Host "[ 10 ] Device tools"
-	 Write-Host "[ m ] Main Menu"
-
-	 
+	 Write-Host "Be careful and don't click the red button ;)"
+ 
 	 Write-Host ""
 
-	 Write-Host "[ i ] Install dependancies"
-	 Write-Host "[ h ] Help"
+     Write-Host "[ m ] Main Menu"
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
@@ -606,11 +509,7 @@ While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3
 }
 
 Switch ($IDSelection) {
-	'm' { cls ; MainMenu }
-    1 { cls ; GetVolume }
-    2 { cls ; echo test }
-	3 { cls ; Show-MainMenu }
-	
+	'm' { cls ; MainMenu }  	
 	'q' { exit }
 }
 	 HelpMenu
@@ -621,11 +520,10 @@ function MainMenu
      param (
            [string]$Title = 'Main Menu'
      )
-	 MenuTitle
-	 Write-Host "[ a ] List all tools"
-     Write-Host "[ 1 ] Networking tools"
-     Write-Host "[ 2 ] Printer tools"
-     Write-Host "[ 3 ] Disk tools"
+	 MenuTitle                   
+     Write-Host "[ 1 ] Networking tools                  [ r ] Reboot"
+     Write-Host "[ 2 ] Printer tools                     [ s ] Shutdown"
+     Write-Host "[ 3 ] Disk tools                        [ l ] Logout"
 	 Write-Host "[ 4 ] Active Directory tools"
 	 Write-Host "[ 5 ] Updating tools"
 	 Write-Host "[ 6 ] Monitoring tools"
@@ -641,13 +539,12 @@ function MainMenu
 	 Write-Host ""
 
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 'a',1,2,3,4,5,6,7,8,9,10,'h','q','i') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,10,'h','q','i','s','r','l') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
 
 Switch ($IDSelection) {
-    'a' {cls ; ListToolsMenu}
 	1 { cls ; NetworkingMenu }
     2 { cls ; PrinterMenu }
 	3 { cls ; DiskMenu }
@@ -658,8 +555,11 @@ Switch ($IDSelection) {
     8 { cls ; ShortcutsMenu }
     9 { cls ; BasicActionsMenu }
     10 { cls ; DeviceMenu }
-
-    'i' { cls ; InstallMenu }
+    
+	's' { shutdown /s /t 1 }
+    'r' { shutdown /r /t 1 }
+    'l' { logoff }
+    'i' { cls ; InstallDP }
     'h'	{ cls ; HelpMenu }
 	'q' { exit }
 }
