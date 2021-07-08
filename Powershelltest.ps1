@@ -20,7 +20,7 @@ Function ActiveServices {Get-Service | Where-Object {$_.Status -eq "Running"} | 
 Function RecentEvents {Get-EventLog -LogName System -Newest 30}
 Function DomainStat {Get-ADDomain}
 Function ADUsers {Get-ADUser -Filter *}
-Function SearchUsers {get-Aduser -Filter {name -like "*robert*"}}
+Function SearchUsers {$user = read-host "Search for a User in AD" ; Get-ADUser -filter ('displayname -like "*' + $user + '*"')}
 Function LockedUsers {Search-ADAccount -LockedOut}
 Function DisabledUsers {Search-ADAccount -AccountDisabled}
 Function UnlockAccount {Unlock-ADAccount -Identity PattiFu}
@@ -40,6 +40,7 @@ Function DevicesD {Get-CIMInstance Win32_SystemDriver | select name,@{n="version
 Function GpudateRB {gpupdate /force ; shutdown /r }
 Function GetVersion {Get-ComputerInfo -Property "*version" | Out-Default} 
 Function FlushRegister {ipconfig /flushdns ; ipconfig /registerdns ; Write-Host "***DNS Flushed and Registered***" ; ipconfig /displaydns | Out-Default}
+
 
 
 
@@ -223,7 +224,7 @@ While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3
 Switch ($IDSelection) {
 	'm' { cls ; MainMenu }
     1 { cls ; DomainStat }
-    2 { cls ; SearchUser }
+    2 { cls ; SearchUsers }
 	3 { cls ; DisabledUsers }
 	4 { cls ; LockedUsers }
 	5 { cls ; UnlockAccount }
