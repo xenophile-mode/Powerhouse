@@ -1,5 +1,5 @@
 #Script/command functions
-Function UpdateDP {Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate | Out-Default }
+Function InstallDP {Write-Host "Installing Scoop" Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh') ; Write-Host "Installing ntop"; scoop install ntop; Write-Host "Installing Speedtest-CLI" ; scoop insatll speedtest-cli; Write-Host "Installing PSWindowsUpdate Module" ; Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate | Out-Default }
 Function InstallWU {Install-WindowsUpdate -AcceptAll -AutoReboot | Out-Default}
 Function CheckOUD {get-wulist -criteria "isinstalled=0 and deploymentaction=*" | Out-Default}
 Function CheckUD {get-wulist | Out-Default}
@@ -10,7 +10,7 @@ Function TestPrinter { Out-Printer }
 Function UpdateWUCache { Get-Service -Name wuauserv,bits,cryptsvc | Stop-Service ; Remove-Item -Path "$env:ALLUSERSPROFILE\Application Data\Microsoft\Network\Downloader\qmgr*.dat" ; Get-Service -Name wuauserv,bits,cryptsvc | Start-Service ; Write-Host "***Windows Update Cache Updated***" | Out-Default }
 Function InstallWUGP { gpupdate /force ; Install-WindowsUpdate -AcceptAll -Autoreboot }
 Function CleanupScript { Clear-RecycleBin ; Clear-BCCache ; Remove-Item -Path $env:TEMP -Recurse -Force -ErrorAction SilentlyContinue }
-Function NetStatScript { echo ***YOUR-HOSTNAME*** ; hostname ; echo ***NetworkAdapterStats*** ; Get-NetAdapterStatistics ; echo ***MACAddresses*** ; getmac /v ; echo ***IPConfiguration*** ; ipconfig | Out-Default ; echo ***PingingGoogle.com*** ; ping google.com ; echo ***NetworkStatistics*** ; netstat -e ; echo ***Printers*** ; Get-Printer | Out-Default ; echo ***RunningSpeedtest*** ; C:\Users\Administrator\Downloads\ookla-speedtest-1.0.0-win64\speedtest | Out-Default } 
+Function NetStatScript { echo ***YOUR-HOSTNAME*** ; hostname ; echo ***NetworkAdapterStats*** ; Get-NetAdapterStatistics ; echo ***MACAddresses*** ; getmac /v ; echo ***IPConfiguration*** ; ipconfig | Out-Default ; echo ***PingingGoogle.com*** ; ping google.com ; echo ***NetworkStatistics*** ; netstat -e ; echo ***Printers*** ; Get-Printer | Out-Default ; echo ***RunningSpeedtest*** ; speedtest | Out-Default } 
 Function DiskStatScript { Get-Disk | Out-Default ; Get-Partition | Out-Default ; Get-PhysicalDiskStorageNodeView | Out-Default}
 Function Chkdsk {chkdsk /scan}
 Function Process40mb {Get-Process | Where-Object {$_.WorkingSet -gt 40000000} | Out-Default}
@@ -25,7 +25,7 @@ Function LockedUsers {Search-ADAccount -LockedOut}
 Function DisabledUsers {Search-ADAccount -AccountDisabled}
 Function UnlockAccount {Unlock-ADAccount -Identity PattiFu}
 Function PwChange {Set-ADAccountPassword -Identity elisada -OldPassword (ConvertTo-SecureString -AsPlainText "p@ssw0rd" -Force) -NewPassword (ConvertTo-SecureString -AsPlainText "qwert@12345" -Force) ; Set-ADUser -Identity username -ChangePasswordAtLogon $true }
-Function SpeedTest {C:\Users\Administrator\Downloads\ookla-speedtest-1.0.0-win64\speedtest | Out-Default}
+Function ST { speedtest | Out-Default}
 Function GetDisk {Get-Disk}
 Function MAC {getmac /v}
 Function PrinterStats {Get-Printer ; Get-PrintConfiguration ; Get-PrinterDriver ; Get-PrinterPort ; Get-PrintJob ; Get-PrinterProperty | Out-Default}
@@ -101,7 +101,7 @@ Switch ($IDSelection) {
     1 { cls ; NetworkStatScript }
     2 { cls ; ipconfig | Out-Default}
 	3 { cls ; getmac /v | Out-Default}
-	4 { cls ; C:\Users\Administrator\Downloads\ookla-speedtest-1.0.0-win64\speedtest | Out-Default }
+	4 { cls ; ST }
 	5 { cls ; echo ***PingingGoogle.com*** ; ping google.com | Out-Default }
 	6 { cls ; netstat -e | Out-Default}
 	7 { cls ; SecurityScript Out-Default}
