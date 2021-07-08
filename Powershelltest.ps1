@@ -487,7 +487,7 @@ Switch ($IDSelection) {
     
 	's' { shutdown /s /t 1 }
     'r' { shutdown /r /t 1 }
-    'l' { logoff }
+    'l' { shutdown /l }
     'i' { cls ; InstallDP }
     'h'	{ cls ; HelpMenu }
 	'q' { cls ; exit }
