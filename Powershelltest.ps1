@@ -35,9 +35,11 @@ Function PrintConfig {Get-PrintConfiguration | Out-Default}
 Function PrinterPort {Get-PrinterPort | Out-Default}
 Function PrintJob {Get-PrintJob | Out-Default}
 Function PrinterPropterty {Get-PrinterProperty | Out-Default}
-Function Devices {Get-CIMInstance Win32_PnPSignedDriver | select devicename,driverversion ; Get-CIMInstance Win32_SystemDriver | select name,@{n="version";e={(gi $_.pathname).VersionInfo.FileVersion}} | Out-Default}
+Function Devices {Get-CIMInstance Win32_PnPSignedDriver | select devicename,driverversion | Out-Default}
+Function DevicesD {Get-CIMInstance Win32_SystemDriver | select name,@{n="version";e={(gi $_.pathname).VersionInfo.FileVersion}} | Out-Default}
 Function GpudateRB {gpupdate /force ; shutdown /r }
-Function GetVersion {Get-ComputerInfo -Property "*version" | Out-Default}
+Function GetVersion {Get-ComputerInfo -Property "*version" | Out-Default} 
+Function FlushRegister {ipconfig /flushdns ; ipconfig /registerdns ; Write-Host "***DNS Flushed and Registered***" ; ipconfig /displaydns | Out-Default}
 
 
 
@@ -108,7 +110,7 @@ Switch ($IDSelection) {
 
 
 	
-	'q' { exit }
+	'q' { cls ; exit }
 }
 	 pause ; cls ; NetworkingMenu
 }
@@ -149,7 +151,7 @@ Switch ($IDSelection) {
 	6 { cls ; PrintJob }
 	7 { cls ; PrinterProperty }
 	
-	'q' { exit }
+	'q' { cls ; exit }
 }
 	 pause ; cls ; PrinterMenu
 }
@@ -189,7 +191,7 @@ Switch ($IDSelection) {
 
 
 	
-	'q' { exit }
+	'q' { cls ; exit }
 }
 	 pause ; cls ; DiskMenu
 }
@@ -232,7 +234,7 @@ Switch ($IDSelection) {
     2 { cls ; echo test }
 	3 { cls ; Show-MainMenu }
 	
-	'q' { exit }
+	'q' { cls ; exit }
 }
 	 ActiveDirectoryMenu
 }
@@ -272,7 +274,7 @@ Switch ($IDSelection) {
 	7 { cls ; GpudateRB}
 
 
-	'q' { exit }
+	'q' { cls ; exit }
 }
 	 pause ; cls ; UpdatingMenu
 }
@@ -312,7 +314,7 @@ Switch ($IDSelection) {
 	6 { cls ; BiosInfo }
 	7 { cls ; GetVersion }
 
-    'q' { exit }
+    'q' { cls ; exit }
 }
 	 pause ; cls ; Stats/MonitoringMenu
 }
@@ -323,47 +325,44 @@ function MaintanenceMenu
            [string]$Title = 'Maintanence tools'
      )
 	 MenuTitle
-	 Write-Host "[ a ] List all tools"
-     Write-Host "[ 1 ] Networking tools"
-     Write-Host "[ 2 ] Printer tools"
-     Write-Host "[ 3 ] Disk tools"
-	 Write-Host "[ 4 ] Active Directory tools"
-	 Write-Host "[ 5 ] Updating tools"
-	 Write-Host "[ 6 ] Monitoring tools"
-	 Write-Host "[ 7 ] Maintanence scripts"
-	 Write-Host "[ 8 ] Shortcuts"
-	 Write-Host "[ 9 ] Basic PC actions"
-	 Write-Host "[ 10 ] Device tools"
+     Write-Host "[ 1 ] Run Cleanup Script"
+     Write-Host "[ 2 ] Run Clean Manager"
+     Write-Host "[ 3 ] Run Security Script"
+	 Write-Host "[ 4 ] Flush and Register DNS"
+	 Write-Host "[ 5 ] Run Check Disk"
+	 Write-Host "[ 6 ] Scan System"
 	 Write-Host "[ m ] Main Menu"
 
 	 
 	 Write-Host ""
-
-	 Write-Host "[ i ] Install dependancies"
-	 Write-Host "[ h ] Help"
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,'m','q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
 
 Switch ($IDSelection) {
 	'm' { cls ; MainMenu }
-    1 { cls ; GetVolume }
-    2 { cls ; echo test }
-	3 { cls ; Show-MainMenu }
+    1 { cls ; CleanupScript }
+    2 { cls ; Clean }
+	3 { cls ; SecurityScript }
+	4 { cls ; FlushRegister }
+	5 { cls ; chkdsk /r }
+	6 { cls ; sfc /scannow }
+
 	
-	'q' { exit }
+	
+	'q' { cls ; exit }
 }
-	 MaintanenceMenu
+	 pause ; cls ; MaintanenceMenu
 }
 
-function ShortcutsMenu
+function SoftwareMenu
 {
      param (
-           [string]$Title = 'Shortcuts Menu'
+           [string]$Title = 'Drivers/Software Menu'
      )
 	 MenuTitle
 	 Write-Host "[ a ] List all tools"
@@ -398,52 +397,9 @@ Switch ($IDSelection) {
     2 { cls ; echo test }
 	3 { cls ; Show-MainMenu }
 	
-	'q' { exit }
+	'q' { cls ; exit }
 }
-	 ShortcutsMenu
-}
-
-function BasicActionsMenu
-{
-     param (
-           [string]$Title = 'Basic PC tools'
-     )
-	 MenuTitle
-	 Write-Host "[ a ] List all tools"
-     Write-Host "[ 1 ] Networking tools"
-     Write-Host "[ 2 ] Printer tools"
-     Write-Host "[ 3 ] Disk tools"
-	 Write-Host "[ 4 ] Active Directory tools"
-	 Write-Host "[ 5 ] Updating tools"
-	 Write-Host "[ 6 ] Monitoring tools"
-	 Write-Host "[ 7 ] Maintanence scripts"
-	 Write-Host "[ 8 ] Shortcuts"
-	 Write-Host "[ 9 ] Basic PC actions"
-	 Write-Host "[ 10 ] Device tools"
-	 Write-Host "[ m ] Main Menu"
-
-	 
-	 Write-Host ""
-
-	 Write-Host "[ i ] Install dependancies"
-	 Write-Host "[ h ] Help"
-     Write-Host "[ q ] Quit"
-	 Write-Host ""
-
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
-{ 
-    Write-Warning "$Selection is not a valid option" 
-}
-
-Switch ($IDSelection) {
-	'm' { cls ; MainMenu }
-    1 { cls ; GetVolume }
-    2 { cls ; echo test }
-	3 { cls ; Show-MainMenu }
-	
-	'q' { exit }
-}
-	 BasicActionsMenu
+	 SoftwareMenu
 }
 
 function DeviceMenu
@@ -452,24 +408,13 @@ function DeviceMenu
            [string]$Title = 'Device tools'
      )
 	 MenuTitle
-	 Write-Host "[ a ] List all tools"
-     Write-Host "[ 1 ] Networking tools"
-     Write-Host "[ 2 ] Printer tools"
-     Write-Host "[ 3 ] Disk tools"
-	 Write-Host "[ 4 ] Active Directory tools"
-	 Write-Host "[ 5 ] Updating tools"
-	 Write-Host "[ 6 ] Monitoring tools"
-	 Write-Host "[ 7 ] Maintanence scripts"
-	 Write-Host "[ 8 ] Shortcuts"
-	 Write-Host "[ 9 ] Basic PC actions"
-	 Write-Host "[ 10 ] Device tools"
-	 Write-Host "[ m ] Main Menu"
+	 Write-Host "[ 1 ] List Devices"
+     Write-Host "[ 2 ] List Devices by driver"
+	 Write-Host "[ 3 ] Insall Device Drivers"
+     Write-Host "[ m ] Main Menu"
 
 	 
 	 Write-Host ""
-
-	 Write-Host "[ i ] Install dependancies"
-	 Write-Host "[ h ] Help"
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
@@ -480,13 +425,14 @@ While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3
 
 Switch ($IDSelection) {
 	'm' { cls ; MainMenu }
-    1 { cls ; GetVolume }
-    2 { cls ; echo test }
-	3 { cls ; Show-MainMenu }
+    1 { cls ; Devices }
+    2 { cls ; DevicesD }
+    3 { cls ; SoftwareMenu }
+
 	
-	'q' { exit }
+	'q' { cls ; exit }
 }
-	 DeviceMenu
+	 pause ; cls ; DeviceMenu
 }
 
 function HelpMenu
@@ -510,7 +456,7 @@ While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3
 
 Switch ($IDSelection) {
 	'm' { cls ; MainMenu }  	
-	'q' { exit }
+	'q' { cls ; exit }
 }
 	 HelpMenu
 }
@@ -528,9 +474,8 @@ function MainMenu
 	 Write-Host "[ 5 ] Updating tools"
 	 Write-Host "[ 6 ] Monitoring tools"
 	 Write-Host "[ 7 ] Maintanence scripts"
-	 Write-Host "[ 8 ] Shortcuts"
-	 Write-Host "[ 9 ] Basic PC actions"
-	 Write-Host "[ 10 ] Device tools"
+	 Write-Host "[ 8 ] Install Drivers/Software"
+	 Write-Host "[ 9 ] Device tools"
 	 Write-Host ""
 
 	 Write-Host "[ i ] Install dependancies"
@@ -552,16 +497,15 @@ Switch ($IDSelection) {
     5 { cls ; UpdatingMenu }
     6 { cls ; Stats/MonitoringMenu }
     7 { cls ; MaintanenceMenu }
-    8 { cls ; ShortcutsMenu }
-    9 { cls ; BasicActionsMenu }
-    10 { cls ; DeviceMenu }
+    8 { cls ; SoftwareMenu }
+    9 { cls ; DeviceMenu }
     
 	's' { shutdown /s /t 1 }
     'r' { shutdown /r /t 1 }
     'l' { logoff }
     'i' { cls ; InstallDP }
     'h'	{ cls ; HelpMenu }
-	'q' { exit }
+	'q' { cls ; exit }
 }
 	 cls ; MainMenu
 }
