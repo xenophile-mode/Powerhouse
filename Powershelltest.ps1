@@ -202,24 +202,16 @@ function ActiveDirectoryMenu
            [string]$Title = 'Active Directory tools'
      )
 	 MenuTitle
-	 Write-Host "[ a ] List all tools"
-     Write-Host "[ 1 ] Networking tools"
-     Write-Host "[ 2 ] Printer tools"
-     Write-Host "[ 3 ] Disk tools"
-	 Write-Host "[ 4 ] Active Directory tools"
-	 Write-Host "[ 5 ] Updating tools"
-	 Write-Host "[ 6 ] Monitoring tools"
-	 Write-Host "[ 7 ] Maintanence scripts"
-	 Write-Host "[ 8 ] Shortcuts"
-	 Write-Host "[ 9 ] Basic PC actions"
-	 Write-Host "[ 10 ] Device tools"
+     Write-Host "[ 1 ] Domain Info"
+     Write-Host "[ 2 ] Search User in Active Directory"
+     Write-Host "[ 3 ] List Disabled Users"
+	 Write-Host "[ 4 ] List Locked Users"
+	 Write-Host "[ 5 ] Unlock User Account"
+	 Write-Host "[ 6 ] Reset User Password"
 	 Write-Host "[ m ] Main Menu"
 
 	 
 	 Write-Host ""
-
-	 Write-Host "[ i ] Install dependancies"
-	 Write-Host "[ h ] Help"
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
@@ -230,13 +222,19 @@ While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3
 
 Switch ($IDSelection) {
 	'm' { cls ; MainMenu }
-    1 { cls ; GetVolume }
-    2 { cls ; echo test }
-	3 { cls ; Show-MainMenu }
+    1 { cls ; DomainStat }
+    2 { cls ; SearchUser }
+	3 { cls ; DisabledUsers }
+	4 { cls ; LockedUsers }
+	5 { cls ; UnlockAccount }
+	6 { cls ; PwChange }
+
+
+
 	
 	'q' { cls ; exit }
 }
-	 ActiveDirectoryMenu
+	 pause ; cls ; ActiveDirectoryMenu
 }
 
 function UpdatingMenu
@@ -365,24 +363,12 @@ function SoftwareMenu
            [string]$Title = 'Drivers/Software Menu'
      )
 	 MenuTitle
-	 Write-Host "[ a ] List all tools"
-     Write-Host "[ 1 ] Networking tools"
-     Write-Host "[ 2 ] Printer tools"
-     Write-Host "[ 3 ] Disk tools"
-	 Write-Host "[ 4 ] Active Directory tools"
-	 Write-Host "[ 5 ] Updating tools"
-	 Write-Host "[ 6 ] Monitoring tools"
-	 Write-Host "[ 7 ] Maintanence scripts"
-	 Write-Host "[ 8 ] Shortcuts"
-	 Write-Host "[ 9 ] Basic PC actions"
-	 Write-Host "[ 10 ] Device tools"
+     Write-Host "[ 1 ] Install Driver/Software"
+     
 	 Write-Host "[ m ] Main Menu"
 
 	 
 	 Write-Host ""
-
-	 Write-Host "[ i ] Install dependancies"
-	 Write-Host "[ h ] Help"
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
@@ -393,13 +379,12 @@ While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3
 
 Switch ($IDSelection) {
 	'm' { cls ; MainMenu }
-    1 { cls ; GetVolume }
-    2 { cls ; echo test }
-	3 { cls ; Show-MainMenu }
+    1 { cls ; Write-Host "Not setup yet" }
+    
 	
 	'q' { cls ; exit }
 }
-	 SoftwareMenu
+	 pause ; cls ; SoftwareMenu
 }
 
 function DeviceMenu
