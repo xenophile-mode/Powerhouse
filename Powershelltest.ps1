@@ -1,5 +1,5 @@
 #Script/command functions
-Function InstallDPP {Write-Host "Installing Scoop" ; Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh') ; Write-Host "Installing ntop"; scoop install ntop; Write-Host "Installing Speedtest-CLI" ; scoop insatll speedtest-cli; Write-Host "Installing PSWindowsUpdate Module" ; Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate | Out-Default }
+Function InstallDPP {Write-Host "Installing Scoop" ; Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh') ; Write-Host "Installing ntop"; scoop install ntop; Write-Host "Installing Speedtest-CLI" ; scoop insatll speedtest-cli; Write-Host "Installing PSWindowsUpdate Module" ; Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate ; Install-Module -Name wifiprofilemanagement ; Import-Module -Name wifiprofilemanagement | Out-Default }
 Function InstallWU {Install-WindowsUpdate -AcceptAll -AutoReboot | Out-Default}
 Function CheckOUD {get-wulist -criteria "isinstalled=0 and deploymentaction=*" | Out-Default}
 Function CheckUD {get-wulist | Out-Default}
@@ -23,8 +23,8 @@ Function ADUsers {Get-ADUser -Filter *}
 Function SearchUsers {$searchad = read-host "Search for a User in AD" ; Get-ADUser -filter ('displayname -like "*' + $searchad + '*"')}
 Function LockedUsers {Search-ADAccount -LockedOut}
 Function DisabledUsers {Search-ADAccount -AccountDisabled}
-Function UnlockAccount {Unlock-ADAccount -Identity PattiFu}
-Function PwChange {Set-ADAccountPassword -Identity elisada -OldPassword (ConvertTo-SecureString -AsPlainText "p@ssw0rd" -Force) -NewPassword (ConvertTo-SecureString -AsPlainText "qwert@12345" -Force) ; Set-ADUser -Identity username -ChangePasswordAtLogon $true }
+Function UnlockAccount {$ulad = read-host "Specify Account SAM Name" ; Unlock-ADAccount -Identity ($ulad) }
+Function PwChange {$searchad = read-host "Specify Account SAM Name" ; $newpw = read-host "New Password" ; Set-ADAccountPassword -Identity ($searchad) -NewPassword (ConvertTo-SecureString -AsPlainText ($newpw) -Force) ; Set-ADUser -Identity ($searchad) -ChangePasswordAtLogon $true }
 Function ST { speedtest | Out-Default}
 Function GetDisk {Get-Disk}
 Function MAC {getmac /v}
@@ -40,7 +40,7 @@ Function DevicesD {Get-CIMInstance Win32_SystemDriver | select name,@{n="version
 Function GpudateRB {gpupdate /force ; shutdown /r }
 Function GetVersion {Get-ComputerInfo -Property "*version" | Out-Default} 
 Function FlushRegister {ipconfig /flushdns ; ipconfig /registerdns ; Write-Host "***DNS Flushed and Registered***" ; ipconfig /displaydns | Out-Default}
-
+Function GetWifi {Get-WiFiAvailableNetwork}
 
 
 
@@ -85,6 +85,7 @@ function NetworkingMenu
 	 Write-Host "[ 5 ] Ping Google.com"
 	 Write-Host "[ 6 ] Network Interface Statistics"
 	 Write-Host "[ 7 ] Run Security Script"
+	 Write-Host "[ 8 ] Search Wifi Networks"
 	 Write-Host "[ m ] Main Menu"
 
 	 
@@ -92,7 +93,7 @@ function NetworkingMenu
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,'m','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,'m','q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -105,11 +106,8 @@ Switch ($IDSelection) {
 	4 { cls ; ST }
 	5 { cls ; echo ***PingingGoogle.com*** ; ping google.com | Out-Default }
 	6 { cls ; netstat -e | Out-Default}
-	7 { cls ; SecurityScript Out-Default}
-
-
-
-
+	7 { cls ; SecurityScript | Out-Default}
+	8 { cls ; GetWifi }
 	
 	'q' { cls ; exit }
 }
@@ -217,7 +215,7 @@ function ActiveDirectoryMenu
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,'m','q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -499,6 +497,6 @@ Switch ($IDSelection) {
 }
 
 #Import modules
-Import-Module PSWindowsUpdate
+Import-Module PSWindowsUpdate ; Import-Module -Name wifiprofilemanagement
 
 cls ; MainMenu
