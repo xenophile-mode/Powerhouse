@@ -20,7 +20,7 @@ Function ActiveServices {Get-Service | Where-Object {$_.Status -eq "Running"} | 
 Function RecentEvents {Get-EventLog -LogName System -Newest 30}
 Function DomainStat {Get-ADDomain}
 Function ADUsers {Get-ADUser -Filter *}
-Function SearchUsers {$user = read-host "Search for a User in AD" ; Get-ADUser -filter ('displayname -like "*' + $user + '*"')}
+Function SearchUsers {$searchad = read-host "Search for a User in AD" ; Get-ADUser -filter ('displayname -like "*' + $searchad + '*"')}
 Function LockedUsers {Search-ADAccount -LockedOut}
 Function DisabledUsers {Search-ADAccount -AccountDisabled}
 Function UnlockAccount {Unlock-ADAccount -Identity PattiFu}
@@ -31,10 +31,10 @@ Function MAC {getmac /v}
 Function PrinterStats {Get-Printer ; Get-PrintConfiguration ; Get-PrinterDriver ; Get-PrinterPort ; Get-PrintJob ; Get-PrinterProperty | Out-Default}
 Function Printer {Get-Printer | Out-Default}
 Function PrinterDriver {Get-PrinterDriver | Out-Default}
-Function PrintConfig {Get-PrintConfiguration | Out-Default}
+Function PrintConfig {$printcf = read-host "Specify printer" ; Get-PrintConfiguration -PrinterName ($printcf) | Out-Default}
 Function PrinterPort {Get-PrinterPort | Out-Default}
-Function PrintJob {Get-PrintJob | Out-Default}
-Function PrinterPropterty {Get-PrinterProperty | Out-Default}
+Function PrintJob {$printcf = read-host "Specify printer" ; Get-PrintJob -PrinterName ($printcf) | Out-Default}
+Function PrinterPropterty {$printcf = read-host "Specify printer" ; Get-PrinterProperty -PrinterName ($printcf) | Out-Default}
 Function Devices {Get-CIMInstance Win32_PnPSignedDriver | select devicename,driverversion | Out-Default}
 Function DevicesD {Get-CIMInstance Win32_SystemDriver | select name,@{n="version";e={(gi $_.pathname).VersionInfo.FileVersion}} | Out-Default}
 Function GpudateRB {gpupdate /force ; shutdown /r }
@@ -99,7 +99,7 @@ While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3
 
 Switch ($IDSelection) {
 	'm' { cls ; MainMenu }
-    1 { cls ; NetworkStatScript }
+    1 { cls ; NetStatScript }
     2 { cls ; ipconfig | Out-Default}
 	3 { cls ; getmac /v | Out-Default}
 	4 { cls ; ST }
@@ -169,7 +169,8 @@ function DiskMenu
 	 Write-Host "[ 4 ] System Scan"
 	 Write-Host "[ 5 ] Check Disk"
 	 Write-Host "[ 6 ] Print Directory Tree"
-	 
+	 Write-Host "[ m ] Main Menu"
+
 	 
 	 Write-Host ""
      Write-Host "[ q ] Quit"
@@ -251,7 +252,8 @@ function UpdatingMenu
 	 Write-Host "[ 5 ] Updated Windows Update Cache"
 	 Write-Host "[ 6 ] Group Policy Update and Windows Update"
 	 Write-Host "[ 7 ] Group Policy Update with auto reboot"
-	 
+	 Write-Host "[ m ] Main Menu"
+
 	 Write-Host ""
 
      Write-Host "[ q ] Quit"
