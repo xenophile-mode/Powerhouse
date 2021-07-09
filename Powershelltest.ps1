@@ -28,7 +28,7 @@ Function PwChange {$searchad = read-host "Specify Account SAM Name" ; $newpw = r
 Function ST { speedtest | Out-Default}
 Function GetDisk {Get-Disk}
 Function MAC {getmac /v}
-Function PrinterStats {Get-Printer ; Get-PrintConfiguration ; Get-PrinterDriver ; Get-PrinterPort ; Get-PrintJob ; Get-PrinterProperty | Out-Default}
+Function PrinterStats {Get-Printer | Out-Default ; Get-PrinterDriver | Out-Default ; Get-PrinterPort | Out-Default}
 Function Printer {Get-Printer | Out-Default}
 Function PrinterDriver {Get-PrinterDriver | Out-Default}
 Function PrintConfig {$printcf = read-host "Specify printer" ; Get-PrintConfiguration -PrinterName ($printcf) | Out-Default}
@@ -41,6 +41,24 @@ Function GpudateRB {gpupdate /force ; shutdown /r }
 Function GetVersion {Get-ComputerInfo -Property "*version" | Out-Default} 
 Function FlushRegister {ipconfig /flushdns ; ipconfig /registerdns ; Write-Host "***DNS Flushed and Registered***" ; ipconfig /displaydns | Out-Default}
 Function GetWifi {Get-WiFiAvailableNetwork}
+function GetTemp {
+    $t = Get-CimInstance MSAcpi_ThermalZoneTemperature -Namespace "root/wmi"
+    $returntemp = @()
+
+    foreach ($temp in $t.CurrentTemperature)
+    {
+
+
+    $currentTempKelvin = $temp / 10
+    $currentTempCelsius = $currentTempKelvin - 273.15
+
+    $currentTempFahrenheit = (9/5) * $currentTempCelsius + 32
+
+    $returntemp += $currentTempCelsius.ToString() + " C : " + $currentTempFahrenheit.ToString() + " F : " + $currentTempKelvin + "K"  
+    }
+    return $returntemp
+}
+
 
 
 
@@ -247,7 +265,7 @@ function UpdatingMenu
      Write-Host "[ 2 ] List Optional Updates"
      Write-Host "[ 3 ] Install Windows Updates"
 	 Write-Host "[ 4 ] Insatll Optional Windows Updates"
-	 Write-Host "[ 5 ] Updated Windows Update Cache"
+	 Write-Host "[ 5 ] Update Windows Update Cache"
 	 Write-Host "[ 6 ] Group Policy Update and Windows Update"
 	 Write-Host "[ 7 ] Group Policy Update with auto reboot"
 	 Write-Host "[ m ] Main Menu"
@@ -291,6 +309,8 @@ function Stats/MonitoringMenu
 	 Write-Host "[ 5 ] Disk Stats/Info"
 	 Write-Host "[ 6 ] BIOS Info"
 	 Write-Host "[ 7 ] Version info"
+	 Write-Host "[ 8 ] Get Temperature"
+	 
 	 Write-Host "[ m ] Main Menu"
 
 	 
@@ -298,7 +318,7 @@ function Stats/MonitoringMenu
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,'m','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,'m','q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -312,6 +332,8 @@ Switch ($IDSelection) {
 	5 { cls ; DiskStatScript }
 	6 { cls ; BiosInfo }
 	7 { cls ; GetVersion }
+	8 { cls ; GetTemp }
+	
 
     'q' { cls ; exit }
 }
