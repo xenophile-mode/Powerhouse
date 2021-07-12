@@ -59,6 +59,11 @@ function GetTemp {
     return $returntemp
 }
 Function TestNet {Test-NetConnection | Out-Default }
+Function nstat {netstat /b | Out-Default }
+Function arpa {arp -a | Out-Default}
+Function dhcpf {Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter "DHCPEnabled=$true" |
+Format-Table -Property DHCP* | Out-Default}
+
 
 
 
@@ -109,6 +114,10 @@ function NetworkingMenu
 	 Write-Host "[ 7 ] Run Security Script"
 	 Write-Host "[ 8 ] Search Wifi Networks"
 	 Write-Host "[ 9 ] Test Network Connection"
+	 Write-Host "[ 10 ] Arp list"
+	 Write-Host "[ 11 ] List Network Devices"
+	 Write-Host "[ 12 ] DHCP Properties"
+
 	 Write-Host "[ m ] Main Menu"
 
 	 
@@ -116,7 +125,7 @@ function NetworkingMenu
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,'m','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,10,11,12,'m','q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -132,6 +141,12 @@ Switch ($IDSelection) {
 	7 { cls ; SecurityScript | Out-Default}
 	8 { cls ; GetWifi }
 	9 { cls ; TestNet }
+	10 { cls ; arpa }
+	11 { cls ; nstat }
+	12 { cls ; dhcpf }
+
+
+
 
 	
 	'q' { cls ; exit }
