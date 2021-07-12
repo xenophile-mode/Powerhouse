@@ -10,7 +10,7 @@ Function TestPrinter { Out-Printer }
 Function UpdateWUCache { Get-Service -Name wuauserv,bits,cryptsvc | Stop-Service ; Remove-Item -Path "$env:ALLUSERSPROFILE\Application Data\Microsoft\Network\Downloader\qmgr*.dat" ; Get-Service -Name wuauserv,bits,cryptsvc | Start-Service ; Write-Host "***Windows Update Cache Updated***" | Out-Default }
 Function InstallWUGP { gpupdate /force ; Install-WindowsUpdate -AcceptAll -Autoreboot }
 Function CleanupScript { Clear-RecycleBin ; Clear-BCCache ; Remove-Item -Path $env:TEMP -Recurse -Force -ErrorAction SilentlyContinue }
-Function NetStatScript { echo ***YOUR-HOSTNAME*** ; hostname ; echo ***NetworkAdapterStats*** ; Get-NetAdapterStatistics ; echo ***MACAddresses*** ; getmac /v ; echo ***IPConfiguration*** ; ipconfig | Out-Default ; echo ***PingingGoogle.com*** ; ping google.com ; echo ***NetworkStatistics*** ; netstat -e ; echo ***Printers*** ; Get-Printer | Out-Default ; echo ***RunningSpeedtest*** ; speedtest | Out-Default } 
+Function NetStatScript { echo ***YOUR-HOSTNAME*** ; hostname ; Write-Host "" ; echo ***NetworkAdapterStats*** ; Get-NetAdapterStatistics ; Write-Host "" ; echo ***MACAddresses*** ; getmac /v ; Write-Host "" ; echo ***IPConfiguration*** ; ipconfig | Out-Default ; Write-Host "" ; echo ***PingingGoogle.com*** ; ping google.com ; Write-Host "" ; echo ***NetworkStatistics*** ; netstat -e ; Write-Host "" ; echo ***Printers*** ; Get-Printer | Out-Default ; Write-Host "" ; echo ***RunningSpeedtest*** ; speedtest | Out-Default } 
 Function DiskStatScript { Get-Disk | Out-Default ; Get-Partition | Out-Default ; Get-PhysicalDiskStorageNodeView | Out-Default}
 Function Chkdsk {chkdsk /scan}
 Function Process40mb {Get-Process | Where-Object {$_.WorkingSet -gt 40000000} | Out-Default}
@@ -58,6 +58,8 @@ function GetTemp {
     }
     return $returntemp
 }
+Function TestNet {Test-NetConnection | Out-Default }
+
 
 
 
@@ -106,6 +108,7 @@ function NetworkingMenu
 	 Write-Host "[ 6 ] Network Interface Statistics"
 	 Write-Host "[ 7 ] Run Security Script"
 	 Write-Host "[ 8 ] Search Wifi Networks"
+	 Write-Host "[ 9 ] Test Network Connection"
 	 Write-Host "[ m ] Main Menu"
 
 	 
@@ -113,7 +116,7 @@ function NetworkingMenu
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,'m','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,'m','q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -128,6 +131,8 @@ Switch ($IDSelection) {
 	6 { cls ; netstat -e | Out-Default}
 	7 { cls ; SecurityScript | Out-Default}
 	8 { cls ; GetWifi }
+	9 { cls ; TestNet }
+
 	
 	'q' { cls ; exit }
 }
