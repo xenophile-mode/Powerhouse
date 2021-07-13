@@ -63,6 +63,9 @@ Function nstat {netstat /b | Out-Default }
 Function arpa {arp -a | Out-Default}
 Function dhcpf {Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter "DHCPEnabled=$true" |
 Format-Table -Property DHCP* | Out-Default}
+Function dhcpr {Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter "IPEnabled=$true and DHCPEnabled=$true" |
+  Where-Object {$_.DHCPServer -contains '192.168.1.254'} |
+ForEach-Object -Process {$_.ReleaseDHCPLease()} ; Write-Host "***DHCP Leases released and renewed***" | Out-Default }
 
 
 
@@ -117,6 +120,7 @@ function NetworkingMenu
 	 Write-Host "[ 10 ] Arp list"
 	 Write-Host "[ 11 ] List Network Devices"
 	 Write-Host "[ 12 ] DHCP Properties"
+	 Write-Host "[ 13 ] Release and renew DHCP Leases"
 
 	 Write-Host "[ m ] Main Menu"
 
@@ -125,7 +129,7 @@ function NetworkingMenu
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,10,11,12,'m','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,10,11,12,13,'m','q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -144,12 +148,8 @@ Switch ($IDSelection) {
 	10 { cls ; arpa }
 	11 { cls ; nstat }
 	12 { cls ; dhcpf }
-
-
-
-
-	
-	'q' { cls ; exit }
+	13 { cls ; dhcpr }
+    'q' { cls ; exit }
 }
 	 pause ; cls ; NetworkingMenu
 }
@@ -500,12 +500,11 @@ function MainMenu
      Write-Host "[ 1 ] Networking tools                  [ r ] Reboot"
      Write-Host "[ 2 ] Printer tools                     [ s ] Shutdown"
      Write-Host "[ 3 ] Disk tools                        [ l ] Logout"
-	 Write-Host "[ 4 ] Active Directory tools"
-	 Write-Host "[ 5 ] Updating tools"
-	 Write-Host "[ 6 ] Monitoring tools"
-	 Write-Host "[ 7 ] Maintanence scripts"
-	 Write-Host "[ 8 ] Install Drivers/Software"
-	 Write-Host "[ 9 ] Device tools"
+	 Write-Host "[ 4 ] Updating tools"
+	 Write-Host "[ 5 ] Monitoring tools"
+	 Write-Host "[ 6 ] Maintanence scripts"
+	 Write-Host "[ 7 ] Install Drivers/Software"
+	 Write-Host "[ 8 ] Device tools"
 	 Write-Host ""
 
 	 Write-Host "[ i ] Install dependancies"
@@ -514,7 +513,7 @@ function MainMenu
 	 Write-Host ""
 
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,10,'h','q','i','s','r','l') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,'h','q','i','s','r','l') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -523,12 +522,11 @@ Switch ($IDSelection) {
 	1 { cls ; NetworkingMenu }
     2 { cls ; PrinterMenu }
 	3 { cls ; DiskMenu }
-	4 { cls ; ActiveDirectoryMenu }
-    5 { cls ; UpdatingMenu }
-    6 { cls ; Stats/MonitoringMenu }
-    7 { cls ; MaintanenceMenu }
-    8 { cls ; SoftwareMenu }
-    9 { cls ; DeviceMenu }
+    4 { cls ; UpdatingMenu }
+    5 { cls ; Stats/MonitoringMenu }
+    6 { cls ; MaintanenceMenu }
+    7 { cls ; SoftwareMenu }
+    8 { cls ; DeviceMenu }
     
 	's' { shutdown /s /t 1 }
     'r' { shutdown /r /t 1 }
