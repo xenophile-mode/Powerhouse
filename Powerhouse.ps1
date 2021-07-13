@@ -17,10 +17,10 @@ Function Process40mb {Get-Process | Where-Object {$_.WorkingSet -gt 40000000} | 
 Function SecurityScript {Update-MpSignature ; echo ***UPDATED-ANTIMALWARE-DEFINITIONS*** ; Start-MpScan -ScanType QuickScan ; echo ***SCAN-COMPLETED*** ; Get-MpComputerStatus ; Get-MpThreat ; Get-MpThreatDetection}
 Function BiosInfo {Get-CIMInstance -Class Win32_Bios | Format-List -Property *}
 Function ActiveServices {Get-Service | Where-Object {$_.Status -eq "Running"} | Out-Default}
-Function RecentEvents {Get-WinEvent -LogName 'System' -MaxEvents 20 | Out-Default}
-Function EventErrors {Get-WinEvent -FilterHashTable @{LogName='System';Level='2'} | Out-Default}
-Function SecEvents {Get-WinEvent -LogName 'Security' -MaxEvents 20 | Out-Default} 
-Function WarnEvents {Get-WinEvent -FilterHashTable @{LogName='System';Level='3'} | Out-Default}
+Function RecentEvents {Get-WinEvent -LogName 'System' -MaxEvents 20 | Format-List}
+Function EventErrors {Get-WinEvent -FilterHashTable @{LogName='System';Level='2'} | Format-List}
+Function SecEvents {Get-WinEvent -LogName 'Security' -MaxEvents 20 | Format-List} 
+Function WarnEvents {Get-WinEvent -MaxEvents 20 -FilterHashTable @{LogName='System';Level='3'} | Format-List}
 Function ST { speedtest | Out-Default}
 Function GetDisk {Get-Disk}
 Function MAC {getmac /v}
@@ -62,6 +62,8 @@ Format-Table -Property DHCP* | Out-Default}
 Function dhcpr {Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter "IPEnabled=$true and DHCPEnabled=$true" |
   Where-Object {$_.DHCPServer -contains '192.168.1.254'} |
 ForEach-Object -Process {$_.ReleaseDHCPLease()} ; Write-Host "***DHCP Leases released and renewed***" | Out-Default }
+Function SpecEvent {Get-WinEvent -FilterHashtable @{LogName='System';StartTime=$StartTime;EndTime=$EndTime} | Out-Default }
+Function PrintD {Get-Location | Out-Default}
 
 
 
@@ -97,7 +99,7 @@ Function MenuTitle {
 }
 
 
-#Test submenu
+#Menus
 function NetworkingMenu
 {
      param (
@@ -437,6 +439,37 @@ Switch ($IDSelection) {
 	 pause ; cls ; DeviceMenu
 }
 
+function FileManMenu
+{
+     param (
+           [string]$Title = 'File Management tools'
+     )
+	 MenuTitle
+     Write-Host "[ 1 ] Print your current directory"
+     
+
+	 Write-Host "[ m ] Main Menu"
+
+	 
+	 Write-Host ""
+     Write-Host "[ q ] Quit"
+	 Write-Host ""
+
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,'m','q') 
+{ 
+    Write-Warning "$Selection is not a valid option" 
+}
+
+Switch ($IDSelection) {
+	'm' { cls ; MainMenu }
+    1 { cls ; PrintD }
+    
+	
+    'q' { cls ; exit }
+}
+	 pause ; cls ; FileManMenu
+}
+
 function HelpMenu
 {
      param (
@@ -477,6 +510,8 @@ function MainMenu
 	 Write-Host "[ 6 ] Maintanence scripts"
 	 Write-Host "[ 7 ] Install Drivers/Software"
 	 Write-Host "[ 8 ] Device tools"
+	 Write-Host "[ 9 ] File Management tools"
+
 	 Write-Host ""
 
 	 Write-Host "[ i ] Install dependancies"
@@ -485,7 +520,7 @@ function MainMenu
 	 Write-Host ""
 
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,'h','q','i','s','r','l') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,'h','q','i','s','r','l') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -499,6 +534,8 @@ Switch ($IDSelection) {
     6 { cls ; MaintanenceMenu }
     7 { cls ; SoftwareMenu }
     8 { cls ; DeviceMenu }
+    9 { cls ; FileManMenu }
+
     
 	's' { shutdown /s /t 1 }
     'r' { shutdown /r /t 1 }
