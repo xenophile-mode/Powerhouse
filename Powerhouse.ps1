@@ -18,13 +18,6 @@ Function SecurityScript {Update-MpSignature ; echo ***UPDATED-ANTIMALWARE-DEFINI
 Function BiosInfo {Get-CIMInstance -Class Win32_Bios | Format-List -Property *}
 Function ActiveServices {Get-Service | Where-Object {$_.Status -eq "Running"} | Out-Default}
 Function RecentEvents {Get-EventLog -LogName System -Newest 30}
-Function DomainStat {Get-ADDomain}
-Function ADUsers {Get-ADUser -Filter *}
-Function SearchUsers {$searchad = read-host "Search for a User in AD" ; Get-ADUser -filter ('displayname -like "*' + $searchad + '*"')}
-Function LockedUsers {Search-ADAccount -LockedOut}
-Function DisabledUsers {Search-ADAccount -AccountDisabled}
-Function UnlockAccount {$ulad = read-host "Specify Account SAM Name" ; Unlock-ADAccount -Identity ($ulad) }
-Function PwChange {$searchad = read-host "Specify Account SAM Name" ; $newpw = read-host "New Password" ; Set-ADAccountPassword -Identity ($searchad) -NewPassword (ConvertTo-SecureString -AsPlainText ($newpw) -Force) ; Set-ADUser -Identity ($searchad) -ChangePasswordAtLogon $true }
 Function ST { speedtest | Out-Default}
 Function GetDisk {Get-Disk}
 Function MAC {getmac /v}
