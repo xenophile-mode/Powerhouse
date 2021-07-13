@@ -19,6 +19,8 @@ Function BiosInfo {Get-CIMInstance -Class Win32_Bios | Format-List -Property *}
 Function ActiveServices {Get-Service | Where-Object {$_.Status -eq "Running"} | Out-Default}
 Function RecentEvents {Get-WinEvent -LogName 'System' -MaxEvents 20 | Out-Default}
 Function EventErrors {Get-WinEvent -FilterHashTable @{LogName='System';Level='2'} | Out-Default}
+Function SecEvents {Get-WinEvent -LogName 'Security' -MaxEvents 20 | Out-Default} 
+Function WarnEvents {Get-WinEvent -FilterHashTable @{LogName='System';Level='3'} | Out-Default}
 Function ST { speedtest | Out-Default}
 Function GetDisk {Get-Disk}
 Function MAC {getmac /v}
@@ -288,6 +290,10 @@ function Stats/MonitoringMenu
 	 Write-Host "[ 8 ] Get Temperature"
 	 Write-Host "[ 9 ] List recent events"
 	 Write-Host "[ 10 ] List events with errors"
+	 Write-Host "[ 11 ] List security events"
+	 Write-Host "[ 12 ] List events with warnings"
+
+
 
 
 	 
@@ -298,7 +304,7 @@ function Stats/MonitoringMenu
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,10,'m','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,10,11,12,'m','q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -315,6 +321,10 @@ Switch ($IDSelection) {
 	8 { cls ; GetTemp }
 	9 { cls ; RecentEvents }
 	10 { cls ; EventErrors }
+	11 { cls ; SecEvents }
+	12 { cls ; WarnEvents }
+
+
 
 
 	
