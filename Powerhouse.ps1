@@ -1,5 +1,5 @@
 #Script/command functions
-Function InstallDPP {$env:PATH =$env:PATH+";." ; Write-Host "Installing Scoop" ; Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh') ; Write-Host "Installing ntop"; scoop install ntop; Write-Host "Installing Speedtest-CLI" ; scoop insatll speedtest-cli; Write-Host "Installing PSWindowsUpdate Module" ; Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate ; Install-Module -Name wifiprofilemanagement ; Import-Module -Name wifiprofilemanagement | Out-Default }
+Function InstallDPP {Write-Host "Installing Scoop" ; Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh') ; Write-Host "Installing ntop"; scoop install ntop; Write-Host "Installing Speedtest-CLI" ; scoop insatll speedtest-cli; Write-Host "installing fzf" ; scoop insall fzf ; Write-Host "Installing PSWindowsUpdate Module" ; Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate ; Install-Module -Name wifiprofilemanagement ; Import-Module -Name wifiprofilemanagement | Out-Default }
 Function InstallWU {Install-WindowsUpdate -AcceptAll -AutoReboot | Out-Default}
 Function CheckOUD {get-wulist -criteria "isinstalled=0 and deploymentaction=*" | Out-Default}
 Function CheckUD {get-wulist | Out-Default}
@@ -65,7 +65,8 @@ ForEach-Object -Process {$_.ReleaseDHCPLease()} ; Write-Host "***DHCP Leases rel
 Function SpecEvent {Get-WinEvent -FilterHashtable @{LogName='System';StartTime=$StartTime;EndTime=$EndTime} | Out-Default }
 Function PrintD {Get-Location | Out-Default}
 
-
+#Search Function
+Function Search { cd PhSearch ; fzf | Invoke-Expression ; cd C:\Users\Administrator\Powerhouse }
 
 
 
@@ -501,7 +502,8 @@ function MainMenu
      param (
            [string]$Title = 'Main Menu'
      )
-	 MenuTitle                   
+	 MenuTitle
+     Write-Host "[ / ] Search all tools"	 
      Write-Host "[ 1 ] Networking tools                  [ r ] Reboot"
      Write-Host "[ 2 ] Printer tools                     [ s ] Shutdown"
      Write-Host "[ 3 ] Disk tools                        [ l ] Logout"
@@ -520,7 +522,7 @@ function MainMenu
 	 Write-Host ""
 
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,'h','q','i','s','r','l') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,'h','q','i','s','r','l','/') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -535,6 +537,8 @@ Switch ($IDSelection) {
     7 { cls ; SoftwareMenu }
     8 { cls ; DeviceMenu }
     9 { cls ; FileManMenu }
+    '/'	{ cls ; Search }
+
 
     
 	's' { shutdown /s /t 1 }
@@ -548,6 +552,6 @@ Switch ($IDSelection) {
 }
 
 #Import modules
-Import-Module PSWindowsUpdate ; Import-Module -Name wifiprofilemanagement
+$env:PATH =$env:PATH+";." ; Import-Module PSWindowsUpdate ; Import-Module -Name wifiprofilemanagement
 
 cls ; MainMenu
