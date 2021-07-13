@@ -17,7 +17,8 @@ Function Process40mb {Get-Process | Where-Object {$_.WorkingSet -gt 40000000} | 
 Function SecurityScript {Update-MpSignature ; echo ***UPDATED-ANTIMALWARE-DEFINITIONS*** ; Start-MpScan -ScanType QuickScan ; echo ***SCAN-COMPLETED*** ; Get-MpComputerStatus ; Get-MpThreat ; Get-MpThreatDetection}
 Function BiosInfo {Get-CIMInstance -Class Win32_Bios | Format-List -Property *}
 Function ActiveServices {Get-Service | Where-Object {$_.Status -eq "Running"} | Out-Default}
-Function RecentEvents {Get-EventLog -LogName System -Newest 30}
+Function RecentEvents {Get-WinEvent -LogName 'System' -MaxEvents 20 | Out-Default}
+Function EventErrors {Get-WinEvent -FilterHashTable @{LogName='System';Level='2'} | Out-Default}
 Function ST { speedtest | Out-Default}
 Function GetDisk {Get-Disk}
 Function MAC {getmac /v}
@@ -229,46 +230,6 @@ Switch ($IDSelection) {
 	 pause ; cls ; DiskMenu
 }
 
-function ActiveDirectoryMenu
-{
-     param (
-           [string]$Title = 'Active Directory tools'
-     )
-	 MenuTitle
-     Write-Host "[ 1 ] Domain Info"
-     Write-Host "[ 2 ] Search User in Active Directory"
-     Write-Host "[ 3 ] List Disabled Users"
-	 Write-Host "[ 4 ] List Locked Users"
-	 Write-Host "[ 5 ] Unlock User Account"
-	 Write-Host "[ 6 ] Reset User Password"
-	 Write-Host "[ m ] Main Menu"
-
-	 
-	 Write-Host ""
-     Write-Host "[ q ] Quit"
-	 Write-Host ""
-
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,'m','q') 
-{ 
-    Write-Warning "$Selection is not a valid option" 
-}
-
-Switch ($IDSelection) {
-	'm' { cls ; MainMenu }
-    1 { cls ; DomainStat }
-    2 { cls ; SearchUsers }
-	3 { cls ; DisabledUsers }
-	4 { cls ; LockedUsers }
-	5 { cls ; UnlockAccount }
-	6 { cls ; PwChange }
-
-
-
-	
-	'q' { cls ; exit }
-}
-	 pause ; cls ; ActiveDirectoryMenu
-}
 
 function UpdatingMenu
 {
@@ -325,6 +286,10 @@ function Stats/MonitoringMenu
 	 Write-Host "[ 6 ] BIOS Info"
 	 Write-Host "[ 7 ] Version info"
 	 Write-Host "[ 8 ] Get Temperature"
+	 Write-Host "[ 9 ] List recent events"
+	 Write-Host "[ 10 ] List events with errors"
+
+
 	 
 	 Write-Host "[ m ] Main Menu"
 
@@ -333,7 +298,7 @@ function Stats/MonitoringMenu
      Write-Host "[ q ] Quit"
 	 Write-Host ""
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,'m','q') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,10,'m','q') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -348,6 +313,10 @@ Switch ($IDSelection) {
 	6 { cls ; BiosInfo }
 	7 { cls ; GetVersion }
 	8 { cls ; GetTemp }
+	9 { cls ; RecentEvents }
+	10 { cls ; EventErrors }
+
+
 	
 
     'q' { cls ; exit }
