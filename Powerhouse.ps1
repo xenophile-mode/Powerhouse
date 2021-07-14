@@ -508,9 +508,9 @@ function MainMenu
 	 MenuTitle
      Write-Host "[ / ] Search all tools"	 
      Write-Host "[ a ] Add Script"	 
-     Write-Host "[ 1 ] Networking tools                  [ r ] Reboot"
-     Write-Host "[ 2 ] Printer tools                     [ s ] Shutdown"
-     Write-Host "[ 3 ] Disk tools                        [ l ] Logout"
+     Write-Host "[ 1 ] Networking tools                  [ R ] Reboot"
+     Write-Host "[ 2 ] Printer tools                     [ S ] Shutdown"
+     Write-Host "[ 3 ] Disk tools                        [ L ] Logout"
 	 Write-Host "[ 4 ] Updating tools"
 	 Write-Host "[ 5 ] Monitoring tools"
 	 Write-Host "[ 6 ] Maintanence scripts"
