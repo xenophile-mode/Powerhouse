@@ -66,7 +66,7 @@ Function SpecEvent {Get-WinEvent -FilterHashtable @{LogName='System';StartTime=$
 Function PrintD {Get-Location | Out-Default}
 
 #Search Function
-Function Search { cd PhSearch ; fzf | Invoke-Expression ; cd C:\Users\Administrator\Powerhouse }
+Function Search { cd PhSearch ; $env:PATH =$env:PATH+";." ; fzf | Invoke-Expression ; exit}
 
 
 
