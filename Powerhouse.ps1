@@ -66,7 +66,10 @@ Function SpecEvent {Get-WinEvent -FilterHashtable @{LogName='System';StartTime=$
 Function PrintD {Get-Location | Out-Default}
 
 #Search Function
-Function Search { cd PhSearch ; $env:PATH =$env:PATH+";." ; fzf | Invoke-Expression ; exit}
+Function Search { cd PhSearch ; $env:PATH =$env:PATH+";." ; fzf --layout=reverse | Invoke-Expression ; exit}
+
+#Add script 
+Function AddSc {Add-Content -Path 'C:\Users\Administrator\Powerhouse\PhSearch\filename.ps1' -Value 'test' }
 
 
 
@@ -504,6 +507,7 @@ function MainMenu
      )
 	 MenuTitle
      Write-Host "[ / ] Search all tools"	 
+     Write-Host "[ a ] Add Script"	 
      Write-Host "[ 1 ] Networking tools                  [ r ] Reboot"
      Write-Host "[ 2 ] Printer tools                     [ s ] Shutdown"
      Write-Host "[ 3 ] Disk tools                        [ l ] Logout"
@@ -522,7 +526,7 @@ function MainMenu
 	 Write-Host ""
 
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,'h','q','i','s','r','l','/') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,'a','h','q','i','S','R','L','/') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -538,12 +542,13 @@ Switch ($IDSelection) {
     8 { cls ; DeviceMenu }
     9 { cls ; FileManMenu }
     '/'	{ cls ; Search }
+    'a'	{ cls ; AddSc }
 
 
     
-	's' { shutdown /s /t 1 }
-    'r' { shutdown /r /t 1 }
-    'l' { shutdown /l }
+	'S' { shutdown /s /t 1 }
+    'R' { shutdown /r /t 1 }
+    'L' { shutdown /l }
     'i' { cls ; InstallDPP }
     'h'	{ cls ; HelpMenu }
 	'q' { cls ; exit }
