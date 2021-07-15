@@ -66,10 +66,10 @@ Function SpecEvent {Get-WinEvent -FilterHashtable @{LogName='System';StartTime=$
 Function PrintD {Get-Location | Out-Default}
 
 #Search Function
-Function Search { cd PhSearch ; $env:PATH =$env:PATH+";." ; fzf --layout=reverse | Invoke-Expression ; exit}
+Function Search { cd PhSearch ; $env:PATH =$env:PATH+";." ; fzf --layout=reverse | Invoke-Expression ; cd C:\Users\Administrator\Powerhouse ; exit }
 
 #Add script 
-Function AddSc {Add-Content -Path 'C:\Users\Administrator\Powerhouse\PhSearch\filename.ps1' -Value 'test' }
+Function AddSc {$script = read-host "Enter your script" ; $scriptn = read-host "Enter script name" ; Add-Content -Path 'C:\Users\Administrator\Powerhouse\PhSearch\filename.ps1' -Value  $script }
 
 
 
@@ -335,7 +335,7 @@ Switch ($IDSelection) {
 
 	
 
-    'q' { cls ; exit }
+    'q' { cls ; Exit-PSSession }
 }
 	 pause ; cls ; Stats/MonitoringMenu
 }
@@ -511,7 +511,7 @@ function MainMenu
      Write-Host "[ 1 ] Networking tools                  [ R ] Reboot"
      Write-Host "[ 2 ] Printer tools                     [ S ] Shutdown"
      Write-Host "[ 3 ] Disk tools                        [ L ] Logout"
-	 Write-Host "[ 4 ] Updating tools"
+	 Write-Host "[ 4 ] Updating tools                    [ P ] Powerhouse" 
 	 Write-Host "[ 5 ] Monitoring tools"
 	 Write-Host "[ 6 ] Maintanence scripts"
 	 Write-Host "[ 7 ] Install Drivers/Software"
@@ -526,7 +526,7 @@ function MainMenu
 	 Write-Host ""
 
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,'a','h','q','i','S','R','L','/') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,'a','h','q','i','S','R','L','/','p') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -549,6 +549,7 @@ Switch ($IDSelection) {
 	'S' { shutdown /s /t 1 }
     'R' { shutdown /r /t 1 }
     'L' { shutdown /l }
+    'P' { start powershell .\Powerhouse.ps1 }
     'i' { cls ; InstallDPP }
     'h'	{ cls ; HelpMenu }
 	'q' { cls ; exit }
