@@ -69,15 +69,7 @@ Function PrintD {Get-Location | Out-Default}
 Function Search { cd PhSearch ; $env:PATH =$env:PATH+";." ; fzf --layout=reverse | Invoke-Expression ; cd C:\Users\Administrator\Powerhouse ; exit }
 
 #Add script 
-Function AddSc {$script = read-host "Enter your script" ; $scriptn = read-host "Enter script name" ; Add-Content -Path 'C:\Users\Administrator\Powerhouse\PhSearch\filename.ps1' -Value  $script }
-
-
-
-
-
-
-
-
+Function AddSc {$script = read-host "Enter your script" ; $scriptn = read-host "Enter script name" ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  $script }
 
 
 #Install Dependancies function	
