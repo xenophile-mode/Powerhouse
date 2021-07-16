@@ -57,9 +57,7 @@ Function TestNet {Test-NetConnection | Out-Default }
 Function nstat {netstat /b | Out-Default }
 Function arpa {arp -a | Out-Default}
 Function dhcpf {Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter "DHCPEnabled=$true" | Format-Table -Property DHCP* | Out-Default}
-Function dhcpr {Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter "IPEnabled=$true and DHCPEnabled=$true" |
-  Where-Object {$_.DHCPServer -contains '192.168.1.254'} |
-ForEach-Object -Process {$_.ReleaseDHCPLease()} ; Write-Host "***DHCP Leases released and renewed***" | Out-Default }
+Function dhcpr {Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter "IPEnabled=$true and DHCPEnabled=$true" | Where-Object {$_.DHCPServer -contains '192.168.1.254'} | ForEach-Object -Process {$_.ReleaseDHCPLease()} ; Write-Host "***DHCP Leases released and renewed***" | Out-Default }
 Function SpecEvent {Get-WinEvent -FilterHashtable @{LogName='System';StartTime=$StartTime;EndTime=$EndTime} | Out-Default }
 Function PrintD {Get-Location | Out-Default}
 
@@ -70,8 +68,17 @@ Function Search { cd PhSearch ; $env:PATH =$env:PATH+";." ; fzf --layout=reverse
 Function AddSc {$script = read-host "Enter your script" ; $callf = read-host "Call Function" ; $scriptn = read-host "Enter script name" ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  $script ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  ( $callf + ' ; pause ; cd C:\Users\Administrator\Powerhouse ; ./Powerhouse.ps1') ; Write-Host "***Script added***" }
 
 
+
+
 #Install Dependancies function	
 Function InstallDP {Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate | Out-Default}
+
+
+###Package management scripts
+Function wgsearch {$wgs = read-host "Search for a package" ; winget search $wgs }
+Function wginstall {$wgi = read-host "Install a package" ; winget install $wgi}
+
+
 
 #Menu Title Functions
 Function MenuTitle {
@@ -82,10 +89,7 @@ Function MenuTitle {
      Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
      Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
      Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
-     Write-Host ""
-	 Write-Host "Author: Erick Gonzales"
-     Write-Host ""
-	 whoami ; Get-Date	 
+	 PrintD ; whoami ; Get-Date  
      Write-Host ""
 	 
      Write-Host "====================== $Title ======================"
@@ -141,6 +145,7 @@ Switch ($IDSelection) {
 	11 { cls ; nstat }
 	12 { cls ; dhcpf }
 	13 { cls ; dhcpr }
+	
     'q' { cls ; exit }
 }
 	 pause ; cls ; NetworkingMenu
@@ -543,7 +548,7 @@ Switch ($IDSelection) {
     'ps' { start powershell }
     'i' { cls ; InstallDPP }
     'h'	{ cls ; HelpMenu }
-	'q' { cls ; exit }
+    'q' { cls ; stop-process -Id $PID }
 }
 	 pause ; cls ; MainMenu
 }
