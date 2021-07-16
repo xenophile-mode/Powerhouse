@@ -50,15 +50,13 @@ function GetTemp {
 
     $currentTempFahrenheit = (9/5) * $currentTempCelsius + 32
 
-    $returntemp += $currentTempCelsius.ToString() + " C : " + $currentTempFahrenheit.ToString() + " F : " + $currentTempKelvin + "K"  
-     | Out-Default}
+    $returntemp += $currentTempCelsius.ToString() + " C : " + $currentTempFahrenheit.ToString() + " F : " + $currentTempKelvin + "K"  | Out-Default}
     return $returntemp
 }
 Function TestNet {Test-NetConnection | Out-Default }
 Function nstat {netstat /b | Out-Default }
 Function arpa {arp -a | Out-Default}
-Function dhcpf {Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter "DHCPEnabled=$true" |
-Format-Table -Property DHCP* | Out-Default}
+Function dhcpf {Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter "DHCPEnabled=$true" | Format-Table -Property DHCP* | Out-Default}
 Function dhcpr {Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter "IPEnabled=$true and DHCPEnabled=$true" |
   Where-Object {$_.DHCPServer -contains '192.168.1.254'} |
 ForEach-Object -Process {$_.ReleaseDHCPLease()} ; Write-Host "***DHCP Leases released and renewed***" | Out-Default }
@@ -69,7 +67,7 @@ Function PrintD {Get-Location | Out-Default}
 Function Search { cd PhSearch ; $env:PATH =$env:PATH+";." ; fzf --layout=reverse | Invoke-Expression ; cd C:\Users\Administrator\Powerhouse ; exit }
 
 #Add script 
-Function AddSc {$script = read-host "Enter your script" ; $callf = read-host "Call Function" ; $scriptn = read-host "Enter script name" ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  $script ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  ( $callf + ' ; pause ; cd C:\Users\Administrator\Powerhouse ; ./Powerhouse.ps1') ; Write-Host "Script added" }
+Function AddSc {$script = read-host "Enter your script" ; $callf = read-host "Call Function" ; $scriptn = read-host "Enter script name" ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  $script ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  ( $callf + ' ; pause ; cd C:\Users\Administrator\Powerhouse ; ./Powerhouse.ps1') ; Write-Host "***Script added***" }
 
 
 #Install Dependancies function	
@@ -502,7 +500,7 @@ function MainMenu
      Write-Host "[ a ] Add Script                       [ S ] Shutdown"	 
      Write-Host "[ 1 ] Networking tools                 [ L ] Logout"
      Write-Host "[ 2 ] Printer tools                    [ P ] Powerhouse"
-     Write-Host "[ 3 ] Disk tools"
+     Write-Host "[ 3 ] Disk tools                       [ ps ] Powershell"
 	 Write-Host "[ 4 ] Updating tools" 
 	 Write-Host "[ 5 ] Monitoring tools"
 	 Write-Host "[ 6 ] Maintanence scripts"
@@ -518,7 +516,7 @@ function MainMenu
 	 Write-Host ""
 
 
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,'a','h','q','i','S','R','L','/','p') 
+While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,4,5,6,7,8,9,'a','h','q','i','S','R','L','/','ps','P') 
 { 
     Write-Warning "$Selection is not a valid option" 
 }
@@ -541,7 +539,8 @@ Switch ($IDSelection) {
 	'S' { shutdown /s /t 1 }
     'R' { shutdown /r /t 1 }
     'L' { shutdown /l }
-    'P' { start powershell .\Powerhouse.ps1 }
+    'P' { start powershell .\Powerhouse.ps1	}
+    'ps' { start powershell }
     'i' { cls ; InstallDPP }
     'h'	{ cls ; HelpMenu }
 	'q' { cls ; exit }
