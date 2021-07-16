@@ -4,17 +4,17 @@ Function InstallWU {Install-WindowsUpdate -AcceptAll -AutoReboot | Out-Default}
 Function CheckOUD {get-wulist -criteria "isinstalled=0 and deploymentaction=*" | Out-Default}
 Function CheckUD {get-wulist | Out-Default}
 Function InstallOWU {Install-WindowsUpdate -criteria "isinstalled=0 and deploymentaction=*" -AutoReboot | Out-Default }
-Function Clean {cleanmgr ; echo ***Running Cleanmgr***}
+Function Clean {cleanmgr ; echo ***Running Cleanmgr*** | Out-Default}
 Function Alias { New-Alias }
-Function TestPrinter { Out-Printer }
+Function TestPrinter { Out-Printer | Out-Default}
 Function UpdateWUCache { Get-Service -Name wuauserv,bits,cryptsvc | Stop-Service ; Remove-Item -Path "$env:ALLUSERSPROFILE\Application Data\Microsoft\Network\Downloader\qmgr*.dat" ; Get-Service -Name wuauserv,bits,cryptsvc | Start-Service ; Write-Host "***Windows Update Cache Updated***" | Out-Default }
-Function InstallWUGP { gpupdate /force ; Install-WindowsUpdate -AcceptAll -Autoreboot }
+Function InstallWUGP { gpupdate /force ; Install-WindowsUpdate -AcceptAll -Autoreboot | Out-Default}
 Function CleanupScript { Clear-RecycleBin ; Clear-BCCache ; Remove-Item -Path $env:TEMP -Recurse -Force -ErrorAction SilentlyContinue }
 Function NetStatScript { echo ***YOUR-HOSTNAME*** ; hostname ; Write-Host "" ; echo ***NetworkAdapterStats*** ; Get-NetAdapterStatistics ; Write-Host "" ; echo ***MACAddresses*** ; getmac /v ; Write-Host "" ; echo ***IPConfiguration*** ; ipconfig | Out-Default ; Write-Host "" ; echo ***PingingGoogle.com*** ; ping google.com ; Write-Host "" ; echo ***NetworkStatistics*** ; netstat -e ; Write-Host "" ; echo ***Printers*** ; Get-Printer | Out-Default ; Write-Host "" ; echo ***RunningSpeedtest*** ; speedtest | Out-Default } 
 Function DiskStatScript { Get-Disk | Out-Default ; Get-Partition | Out-Default ; Get-PhysicalDiskStorageNodeView | Out-Default}
-Function Chkdsk {chkdsk /scan}
+Function Chkdsk {chkdsk /scan | Out-Default}
 Function Process40mb {Get-Process | Where-Object {$_.WorkingSet -gt 40000000} | Out-Default}
-Function SecurityScript {Update-MpSignature ; echo ***UPDATED-ANTIMALWARE-DEFINITIONS*** ; Start-MpScan -ScanType QuickScan ; echo ***SCAN-COMPLETED*** ; Get-MpComputerStatus ; Get-MpThreat ; Get-MpThreatDetection}
+Function SecurityScript {Update-MpSignature ; echo ***UPDATED-ANTIMALWARE-DEFINITIONS*** ; Start-MpScan -ScanType QuickScan ; echo ***SCAN-COMPLETED*** ; Get-MpComputerStatus ; Get-MpThreat ; Get-MpThreatDetection | Out-Default}
 Function BiosInfo {Get-CIMInstance -Class Win32_Bios | Format-List -Property *}
 Function ActiveServices {Get-Service | Where-Object {$_.Status -eq "Running"} | Out-Default}
 Function RecentEvents {Get-WinEvent -LogName 'System' -MaxEvents 20 | Format-List}
@@ -22,8 +22,8 @@ Function EventErrors {Get-WinEvent -FilterHashTable @{LogName='System';Level='2'
 Function SecEvents {Get-WinEvent -LogName 'Security' -MaxEvents 20 | Format-List} 
 Function WarnEvents {Get-WinEvent -MaxEvents 20 -FilterHashTable @{LogName='System';Level='3'} | Format-List}
 Function ST { speedtest | Out-Default}
-Function GetDisk {Get-Disk}
-Function MAC {getmac /v}
+Function GetDisk {Get-Disk | Out-Default}
+Function MAC {getmac /v | Out-Default}
 Function PrinterStats {Get-Printer | Out-Default ; Get-PrinterDriver | Out-Default ; Get-PrinterPort | Out-Default}
 Function Printer {Get-Printer | Out-Default}
 Function PrinterDriver {Get-PrinterDriver | Out-Default}
@@ -33,10 +33,10 @@ Function PrintJob {$printcf = read-host "Specify printer" ; Get-PrintJob -Printe
 Function PrinterPropterty {$printcf = read-host "Specify printer" ; Get-PrinterProperty -PrinterName ($printcf) | Out-Default}
 Function Devices {Get-CIMInstance Win32_PnPSignedDriver | select devicename,driverversion | Out-Default}
 Function DevicesD {Get-CIMInstance Win32_SystemDriver | select name,@{n="version";e={(gi $_.pathname).VersionInfo.FileVersion}} | Out-Default}
-Function GpudateRB {gpupdate /force ; shutdown /r }
+Function GpudateRB {gpupdate /force ; shutdown /r | Out-Default}
 Function GetVersion {Get-ComputerInfo -Property "*version" | Out-Default} 
 Function FlushRegister {ipconfig /flushdns ; ipconfig /registerdns ; Write-Host "***DNS Flushed and Registered***" ; ipconfig /displaydns | Out-Default}
-Function GetWifi {Get-WiFiAvailableNetwork}
+Function GetWifi {Get-WiFiAvailableNetwork | Out-Default}
 function GetTemp {
     $t = Get-CimInstance MSAcpi_ThermalZoneTemperature -Namespace "root/wmi"
     $returntemp = @()
@@ -51,7 +51,7 @@ function GetTemp {
     $currentTempFahrenheit = (9/5) * $currentTempCelsius + 32
 
     $returntemp += $currentTempCelsius.ToString() + " C : " + $currentTempFahrenheit.ToString() + " F : " + $currentTempKelvin + "K"  
-    }
+     | Out-Default}
     return $returntemp
 }
 Function TestNet {Test-NetConnection | Out-Default }
@@ -69,7 +69,7 @@ Function PrintD {Get-Location | Out-Default}
 Function Search { cd PhSearch ; $env:PATH =$env:PATH+";." ; fzf --layout=reverse | Invoke-Expression ; cd C:\Users\Administrator\Powerhouse ; exit }
 
 #Add script 
-Function AddSc {$script = read-host "Enter your script" ; $callf = read-host "Call Function" ; $scriptn = read-host "Enter script name" ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  $script ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  ( $callf + ' ; pause ; cd C:\Users\Administrator\Powerhouse ; ./Powerhouse.ps1') }
+Function AddSc {$script = read-host "Enter your script" ; $callf = read-host "Call Function" ; $scriptn = read-host "Enter script name" ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  $script ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  ( $callf + ' ; pause ; cd C:\Users\Administrator\Powerhouse ; ./Powerhouse.ps1') ; Write-Host "Script added" }
 
 
 #Install Dependancies function	
