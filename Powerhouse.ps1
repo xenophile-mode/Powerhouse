@@ -77,6 +77,8 @@ Function InstallDP {Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsU
 ###Package management scripts
 Function wgsearch {$wgs = read-host "Search for a package" ; winget search $wgs }
 Function wginstall {$wgi = read-host "Install a package" ; winget install $wgi}
+Function wgexport {$wgexp = read-host "Enter Filename" ; winget export -o C:\Users\Administrator\$wgexp}
+Function wgimport {$wgimp = read-host "Enter Filename/Path" ; winget import -i $wgimp}
 
 
 
