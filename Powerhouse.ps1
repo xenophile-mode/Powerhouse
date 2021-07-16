@@ -69,7 +69,7 @@ Function PrintD {Get-Location | Out-Default}
 Function Search { cd PhSearch ; $env:PATH =$env:PATH+";." ; fzf --layout=reverse | Invoke-Expression ; cd C:\Users\Administrator\Powerhouse ; exit }
 
 #Add script 
-Function AddSc {$script = read-host "Enter your script" ; $callf = read-host "Call Function" ; $scriptn = read-host "Enter script name" ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  $script ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  $callf}
+Function AddSc {$script = read-host "Enter your script" ; $callf = read-host "Call Function" ; $scriptn = read-host "Enter script name" ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  $script ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  ( $callf + ' ; pause ; cd C:\Users\Administrator\Powerhouse ; ./Powerhouse.ps1') }
 
 
 #Install Dependancies function	
@@ -498,12 +498,12 @@ function MainMenu
            [string]$Title = 'Main Menu'
      )
 	 MenuTitle
-     Write-Host "[ / ] Search all tools"	 
-     Write-Host "[ a ] Add Script"	 
-     Write-Host "[ 1 ] Networking tools                  [ R ] Reboot"
-     Write-Host "[ 2 ] Printer tools                     [ S ] Shutdown"
-     Write-Host "[ 3 ] Disk tools                        [ L ] Logout"
-	 Write-Host "[ 4 ] Updating tools                    [ P ] Powerhouse" 
+     Write-Host "[ / ] Search all tools                 [ R ] Reboot"	 
+     Write-Host "[ a ] Add Script                       [ S ] Shutdown"	 
+     Write-Host "[ 1 ] Networking tools                 [ L ] Logout"
+     Write-Host "[ 2 ] Printer tools                    [ P ] Powerhouse"
+     Write-Host "[ 3 ] Disk tools"
+	 Write-Host "[ 4 ] Updating tools" 
 	 Write-Host "[ 5 ] Monitoring tools"
 	 Write-Host "[ 6 ] Maintanence scripts"
 	 Write-Host "[ 7 ] Install Drivers/Software"
