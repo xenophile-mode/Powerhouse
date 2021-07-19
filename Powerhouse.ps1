@@ -169,4 +169,7 @@ Switch ($IDSelection) {
 #Import modules
 $env:PATH =$env:PATH+";." ; Import-Module PSWindowsUpdate ; Import-Module -Name wifiprofilemanagement
 
+#Keybindings
+Set-PSReadlineKeyHandler -Key Alt+j -ScriptBlock {cls ; Search}
+
 cls ; MainMenu
