@@ -62,14 +62,14 @@ Function SpecEvent {Get-WinEvent -FilterHashtable @{LogName='System';StartTime=$
 Function PrintD {Get-Location | Out-Default}
 
 #Search Function
-Function Search { cd PhSearch ; $env:PATH =$env:PATH+";." ; fzf --reverse --margin 5% --border --prompt "Search for a tool:" --header "______                      _                          
+Function Search { cd PhSearch ; $env:PATH =$env:PATH+";." ; fzf -m --reverse --margin 5% --border --prompt "Search for a tool:" --header "______                      _                          
 | ___ \                    | |                         
 | |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ 
 |  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \
 | | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/
 \_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___| v0.1
 
-==================== Select a tool ====================" | Invoke-Expression ; cd C:\Users\Administrator\Powerhouse ; exit }
+==================== Select a tool ====================" | Invoke-Expression ; pause ; cd C:\Users\Administrator\Powerhouse ; return ; Search }
 
 #Add script 
 Function AddSc {$script = read-host "Enter your script" ; $callf = read-host "Call Function" ; $scriptn = read-host "Enter script name" ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  $script ; Add-Content -Path ('C:\Users\Administrator\Powerhouse\PhSearch\' + $scriptn ) -Value  ( $callf + ' ; pause ; cd C:\Users\Administrator\Powerhouse ; ./Powerhouse.ps1') ; Write-Host "***Script added***" }
@@ -179,4 +179,6 @@ $env:PATH =$env:PATH+";." ; Import-Module PSWindowsUpdate ; Import-Module -Name 
 #Keybindings
 Set-PSReadlineKeyHandler -Key Alt+j -ScriptBlock {cls ; Search}
 
-cls ; MainMenu
+while ($true) {
+  cls ; Search ; 
+}
