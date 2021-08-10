@@ -1,2 +1,2 @@
-Function Exit {cd ~ ; powershell}
-Exit
+cd ~ ; powershell
+

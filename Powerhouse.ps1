@@ -182,5 +182,5 @@ Set-PSReadlineKeyHandler -Key Alt+q -ScriptBlock { cls ; stop-process -Id $PID }
 
 
 while ($true) {
-  cls ; Search ; 
+  cls ; Search  
 }
