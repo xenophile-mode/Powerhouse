@@ -178,6 +178,8 @@ $env:PATH =$env:PATH+";." ; Import-Module PSWindowsUpdate ; Import-Module -Name 
 
 #Keybindings
 Set-PSReadlineKeyHandler -Key Alt+j -ScriptBlock {cls ; Search}
+Set-PSReadlineKeyHandler -Key Alt+q -ScriptBlock { cls ; stop-process -Id $PID }
+
 
 while ($true) {
   cls ; Search ; 

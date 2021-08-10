@@ -15,4 +15,4 @@ function GetTemp {
     return $returntemp
 }
 
-GetTemp ; pause ; cd C:\Users\Administrator\Powerhouse ; ./Powerhouse.ps1
+GetTemp
