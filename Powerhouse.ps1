@@ -69,7 +69,7 @@ Function Search { cd PhSearch ; $env:PATH =$env:PATH+";." ; fzf -m --reverse --m
 | | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/
 \_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___| v0.1
 
-==================== Select a tool ====================" | Invoke-Expression ; pause ; cd ph ; return ; Search }
+==================== Select a tool ====================" | Invoke-Expression ; pause ; return ; Search }
 
 #Add script 
 Function AddSc {$script = read-host "Enter your script" ; $callf = read-host "Call Function" ; $scriptn = read-host "Enter script name" ; Add-Content -Path ('Powerhouse\PhSearch\' + $scriptn ) -Value  $script ; Add-Content -Path ('Powerhouse\PhSearch\' + $scriptn ) -Value  ( $callf + ' ; pause ; cd Powerhouse ; ./Powerhouse.ps1') ; Write-Host "***Script added***" }
