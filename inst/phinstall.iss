@@ -3,8 +3,8 @@
 
 #define MyAppName "Powerhouse"
 #define MyAppVersion "0.1"
-#define MyAppPublisher "Acme Inc"
-#define MyAppURL "https://www.example.com/"
+#define MyAppPublisher "Russell Cellular"
+#define MyAppURL "https://russellcellular.com/"
 #define MyAppExeName "Powerhouse.exe"
 
 [Setup]
