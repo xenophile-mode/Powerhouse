@@ -105,80 +105,11 @@ Function MenuTitle {
      Write-Host ""
 }
 
-
-
-function HelpMenu
-{
-     param (
-           [string]$Title = 'Help Menu'
-     )
-	 MenuTitle
-	 Write-Host "Be careful and don't click the red button ;)"
- 
-	 Write-Host ""
-
-     Write-Host "[ m ] Main Menu"
-     Write-Host "[ q ] Quit"
-	 Write-Host ""
-
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 1,2,3,'m','q') 
-{ 
-    Write-Warning "$Selection is not a valid option" 
-}
-
-Switch ($IDSelection) {
-	'm' { cls ; MainMenu }  	
-	'q' { cls ; exit }
-}
-	 HelpMenu
-}
-
-function MainMenu
-{
-     param (
-           [string]$Title = 'Main Menu'
-     )
-	 MenuTitle
-     Write-Host "[ / ] Search all tools                 [ R ] Reboot"	 
-     Write-Host "[ a ] Add Script                       [ S ] Shutdown"	 
-     Write-Host "[ i ] Install dependancies             [ L ] Logout"
-     Write-Host "[ h ] Help                             [ P ] Powerhouse"
-     Write-Host "[ q ] Quit                             [ ps ] Powershell"
-	
-
-	 Write-Host ""
-	 Write-Host ""
-
-
-While (($IDSelection = Read-Host -Prompt 'Please select an option') -notin 'a','h','q','i','S','R','L','/','ps','P') 
-{ 
-    Write-Warning "$Selection is not a valid option" 
-}
-
-Switch ($IDSelection) {
-    '/'	{ cls ; Search }
-    'a'	{ cls ; AddSc }
-
-
-    
-	'S' { shutdown /s /t 1 }
-    'R' { shutdown /r /t 1 }
-    'L' { shutdown /l }
-    'P' { start powershell .\Powerhouse.ps1	}
-    'ps' { start powershell }
-    'i' { cls ; InstallDPP }
-    'h'	{ cls ; HelpMenu }
-    'q' { cls ; stop-process -Id $PID }
-}
-	 pause ; cls ; MainMenu
-}
-
 #Import modules
 $env:PATH =$env:PATH+";." ; Import-Module PSWindowsUpdate ; Import-Module -Name wifiprofilemanagement
 
 #Keybindings
-Set-PSReadlineKeyHandler -Key Alt+j -ScriptBlock {cls ; Search}
-Set-PSReadlineKeyHandler -Key Alt+q -ScriptBlock { cls ; stop-process -Id $PID }
+Set-PSReadlineKeyHandler -Key Alt+j -ScriptBlock {cls ; stop-process -Id $PID} ; Set-PSReadlineKeyHandler -Key Alt+q -ScriptBlock { cls ; stop-process -Id $PID }
 
 
 while ($true) {
