@@ -1,2 +1,4 @@
-Function GpudateRB {gpupdate /force ; shutdown /r | Out-Default}
+Function GpudateRB {
+	gpupdate /force ; shutdown /r | Out-Default
+}
 GpupdateRB

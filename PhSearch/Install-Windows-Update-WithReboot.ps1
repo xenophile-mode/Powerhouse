@@ -1,2 +1,4 @@
-Function InstallWU {Install-WindowsUpdate -AcceptAll -AutoReboot | Out-Default}
+Function InstallWU {
+	Install-WindowsUpdate -AcceptAll -AutoReboot | Out-Default
+}
 InstallWU

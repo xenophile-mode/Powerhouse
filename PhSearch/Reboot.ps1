@@ -1,2 +1,4 @@
-Function reboot { shutdown /r /t 1 }
+Function reboot {
+	shutdown /r /t 1 
+}
 reboot 

@@ -1,2 +1,4 @@
-Function top {ntop | Out-Default}
+Function top {
+	ntop | Out-Default
+}
 top 

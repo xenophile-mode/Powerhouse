@@ -1,2 +1,4 @@
-Function arpa {arp -a | Out-Default}
+Function arpa {
+	arp -a | Out-Default
+}
 arpa 

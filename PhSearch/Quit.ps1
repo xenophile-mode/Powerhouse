@@ -1,2 +1,4 @@
-Function Quit {cls ; stop-process -Id $PID}
+Function Quit {
+	cls ; stop-process -Id $PID
+}
 Quit

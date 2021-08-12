@@ -1,2 +1,4 @@
-Function Alias { New-Alias }
+Function Alias { 
+    New-Alias 
+}
 Alias 

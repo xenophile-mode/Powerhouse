@@ -1,2 +1,4 @@
-Function Printer {Get-Printer | Out-Default}
+Function Printer {
+	Get-Printer | Out-Default
+}
 Printer

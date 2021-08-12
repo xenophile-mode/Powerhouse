@@ -1,2 +1,4 @@
-Function PrinterDriver {Get-PrinterDriver | Out-Default}
+Function PrinterDriver {
+	Get-PrinterDriver | Out-Default
+}
 PrinterDriver

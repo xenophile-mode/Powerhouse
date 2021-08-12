@@ -1,2 +1,4 @@
-Function GetDisk {Get-Disk | Out-Default}
+Function GetDisk {
+	Get-Disk | Out-Default
+}
 GetDisk 

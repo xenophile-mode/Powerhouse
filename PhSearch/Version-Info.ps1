@@ -1,2 +1,4 @@
-Function GetVersion {Get-ComputerInfo -Property "*version" | Out-Default} 
+Function GetVersion {
+	Get-ComputerInfo -Property "*version" | Out-Default
+} 
 GetVersion

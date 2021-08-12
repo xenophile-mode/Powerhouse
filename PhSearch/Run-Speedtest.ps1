@@ -1,2 +1,4 @@
-Function ST { speedtest | Out-Default}
+Function ST { 
+    speedtest | Out-Default
+}
 ST 

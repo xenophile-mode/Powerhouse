@@ -1,2 +1,4 @@
-Function MAC {getmac /v}
+Function MAC {
+	getmac /v
+}
 MAC 

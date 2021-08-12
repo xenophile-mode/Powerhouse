@@ -1,2 +1,4 @@
-Function PrintD {Get-Location | Out-Default}
+Function PrintD {
+	Get-Location | Out-Default
+}
 PrintD 

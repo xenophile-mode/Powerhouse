@@ -1,2 +1,4 @@
-Function logout { shutdown /l }
+Function logout {
+    shutdown /l 
+}
 logout 

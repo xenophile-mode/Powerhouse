@@ -1,2 +1,4 @@
-Function pwsh { start powershell }
+Function pwsh {
+	start powershell 
+}
 pwsh

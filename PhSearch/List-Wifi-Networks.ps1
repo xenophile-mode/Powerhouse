@@ -1,2 +1,4 @@
-Function GetWifi {Get-WiFiAvailableNetwork | Out-Default}
+Function GetWifi {
+	Get-WiFiAvailableNetwork | Out-Default
+}
 GetWifi

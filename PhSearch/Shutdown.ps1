@@ -1,2 +1,4 @@
-Function off { shutdown /s /t 1 }
+Function off { 
+    shutdown /s /t 1 
+}
 off 

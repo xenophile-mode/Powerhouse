@@ -1,2 +1,4 @@
-Function PrinterPort {Get-PrinterPort | Out-Default}
+Function PrinterPort {
+	Get-PrinterPort | Out-Default
+}
 PrinterPort

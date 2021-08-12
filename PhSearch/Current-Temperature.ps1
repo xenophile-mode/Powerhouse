@@ -14,5 +14,4 @@ function GetTemp {
     $returntemp += $currentTempCelsius.ToString() + " C : " + $currentTempFahrenheit.ToString() + " F : " + $currentTempKelvin + "K"  | Out-Default}
     return $returntemp
 }
-
 GetTemp
