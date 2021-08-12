@@ -8,7 +8,13 @@ Function InstallPM {
 }
 
 Function InstallMP {
-	Write-Host "Installing ntop"; scoop install ntop; Write-Host "Installing Speedtest-CLI" ; scoop insatll speedtest-cli; Write-Host "installing fzf" ; scoop insall fzf ; Write-Host "Installing PSWindowsUpdate Module" ; Set-ExecutionPolicy RemoteSigned ; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate ; Install-Module -Name wifiprofilemanagement ; Import-Module -Name wifiprofilemanagement | Out-Default 
+	Write-Host "Installing ntop"; scoop install ntop; Write-Host ` 
+	"Installing Speedtest-CLI" ; scoop install speedtest-cli; ` 
+	Write-Host "installing fzf" ; scoop install fzf ; Write-Host ` 
+	"Installing PSWindowsUpdate Module" ; Set-ExecutionPolicy RemoteSigned ` 
+	; Install-Module PSWindowsUpdate ; Import-Module PSWindowsUpdate ; ` 
+	Install-Module -Name wifiprofilemanagement ; `
+	Import-Module -Name wifiprofilemanagement | Out-Default 
 }
 
 function DependancyInstaller
