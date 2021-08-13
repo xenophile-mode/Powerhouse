@@ -17,6 +17,20 @@ Function InstallMP {
 	Import-Module -Name wifiprofilemanagement | Out-Default 
 }
 
+Function MenuTitle {
+     Write-Host ""	 
+	 Write-Host "______                      _ "
+	 Write-Host "| ___ \                    | |"      
+     Write-Host "| |_/ /____      _____ _ __| |__   ___  _   _ ___  ___ "      
+     Write-Host "|  __/ _ \ \ /\ / / _ \ '__| '_ \ / _ \| | | / __|/ _ \"       
+     Write-Host "| | | (_) \ V  V /  __/ |  | | | | (_) | |_| \__ \  __/"        
+     Write-Host "\_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___|  V0.1"    
+     Write-Host ""
+	 
+     Write-Host "====================== $Title ======================"
+     Write-Host ""
+}
+
 function DependancyInstaller
 {
      param (
@@ -41,4 +55,4 @@ Switch ($IDSelection) {
 }
 	 pause ; cls ; DependancyInstaller
 }
-cls ; DependancyInstaller
+cls ; DependancyInstaller					
