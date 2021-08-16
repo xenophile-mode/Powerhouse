@@ -1,6 +1,6 @@
 #Search Function
 Function Search { 
-    cd PhSearch ; $env:PATH =$env:PATH+";." ; fzf -m --reverse --margin 5% `
+    cd PhSearch ; $env:PATH =$env:PATH+";." ; Get-Command | fzf -m --reverse --margin 5% `
 	--border --prompt "Search for a tool:" --header " `
     ______                      _                          
     | ___ \                    | |                         
@@ -13,6 +13,9 @@ Function Search {
 	Invoke-Expression ; pause ; return ; Search 
 }
 
+Function CS {
+	Get-Command ; 
+}
 #Menu Title Functions
 Function MenuInfo {
     whoami ; Get-Date  
@@ -54,5 +57,3 @@ KeyBindings
 while ($true) {
   cls ; Search  
 }
-
-
