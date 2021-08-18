@@ -11,11 +11,11 @@ Function SearchAll {
     \_|  \___/ \_/\_/ \___|_|  |_| |_|\___/ \__,_|___/\___| v0.1
 
     ==================== Select a tool ====================" | ` 
-	Invoke-Expression ; pause ; return ; SearchAll
+	Invoke-Expression | Out-Default ; pause ; return ; SearchAll
 }
 
 Function CS {
-	Get-Content all-commands.txt ; Get-ChildItem -Name
+	Get-ChildItem -Name ; Get-Content all-commands.txt 
 }
 
 #Menu Title Functions
